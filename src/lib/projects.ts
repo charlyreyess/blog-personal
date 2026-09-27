@@ -4,6 +4,14 @@ import matter from "gray-matter";
 import { isContentFile, isValidSlug, renderMarkdown } from "@/lib/markdown";
 
 const PROJECTS_DIR = path.join(process.cwd(), "content", "proyectos");
+const LOGOS_DIR = path.join(process.cwd(), "public", "proyectos", "logos");
+
+// Logo: el indicado en el encabezado o, si no, public/proyectos/logos/<slug>.(svg|png|webp|jpg)
+function findLogo(slug: string, explicit?: string) {
+  if (explicit) return explicit;
+  const ext = ["svg", "png", "webp", "jpg"].find((e) => fs.existsSync(path.join(LOGOS_DIR, `${slug}.${e}`)));
+  return ext ? `/proyectos/logos/${slug}.${ext}` : undefined;
+}
 
 export type ProjectMeta = {
   slug: string;
@@ -14,6 +22,7 @@ export type ProjectMeta = {
   client?: string;
   stack: string[];
   image?: string;
+  logo?: string;
   url?: string;
   repo?: string;
   featured: boolean;
@@ -35,6 +44,7 @@ function readProjectFile(slug: string) {
     client: optional(data.client),
     stack: Array.isArray(data.stack) ? data.stack.map(String) : [],
     image: optional(data.image),
+    logo: findLogo(slug, optional(data.logo)),
     url: optional(data.url),
     repo: optional(data.repo),
     featured: data.featured === true,

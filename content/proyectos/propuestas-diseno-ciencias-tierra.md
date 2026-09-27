@@ -4,7 +4,7 @@ description: "Catálogo de cinco direcciones visuales para el rediseño de un si
 date: "2026-09-07"
 role: "Diseño UI y maquetación"
 stack: ["HTML", "CSS", "JavaScript", "Diseño UI"]
-image: "/proyectos/propuestas-diseno-ciencias-tierra.png"
+image: "/proyectos/propuestas-diseno-ciencias-tierra.webp"
 featured: true
 ---
 
@@ -22,7 +22,7 @@ Diseñé y maqueté **cinco propuestas completas**, cada una con su propia palet
 4. **Ecosistemas áridos y flora xerófila.**
 5. **Biósfera y ciencias vivas.**
 
-![Propuesta 01 — Dosel forestal](/proyectos/propuestas-diseno-01.png)
+![Propuesta 01 — Dosel forestal](/proyectos/propuestas-diseno-01.webp)
 
 ## Resultado
 

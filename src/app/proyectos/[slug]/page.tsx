@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProjectCover } from "@/components/project-cover";
+import { ProjectLogo } from "@/components/project-logo";
 import { SkyScene } from "@/components/sky-scene";
 import { formatMonth } from "@/lib/format";
 import { getAllProjects, getProject } from "@/lib/projects";
@@ -58,16 +59,17 @@ export default async function ProjectPage({ params }: PageProps<"/proyectos/[slu
           <Link href="/proyectos" className="text-sm font-medium text-sky-ink/80 hover:text-sky-ink">
             ← Volver a proyectos
           </Link>
-          <h1 className="mt-6 text-3xl leading-tight font-bold text-balance text-sky-ink sm:text-5xl">
-            {project.title}
-          </h1>
+          <div className="mt-6 flex items-center gap-4 sm:gap-5">
+            {project.logo && <ProjectLogo src={project.logo} title={project.title} size={72} />}
+            <h1 className="text-3xl leading-tight font-bold text-balance text-sky-ink sm:text-5xl">{project.title}</h1>
+          </div>
           <p className="mt-4 max-w-2xl text-lg font-medium text-pretty text-sky-ink/80">{project.description}</p>
         </div>
       </header>
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <div className="relative -mt-32 aspect-video overflow-hidden rounded-lg border border-line bg-surface shadow-card">
-          <ProjectCover project={project} priority />
+          <ProjectCover project={project} priority sizes="(min-width: 896px) 896px, 100vw" />
         </div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-[1fr_16rem]">

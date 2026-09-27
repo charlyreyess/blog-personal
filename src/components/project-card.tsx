@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ProjectCover } from "@/components/project-cover";
+import { ProjectLogo } from "@/components/project-logo";
 import { formatMonth } from "@/lib/format";
 import type { ProjectMeta } from "@/lib/projects";
 
@@ -11,6 +12,11 @@ export function ProjectCard({ project, wide = false }: { project: ProjectMeta; w
         <ProjectCover project={project} />
       </div>
       <div className={`flex flex-1 flex-col p-6 ${wide ? "md:justify-center md:p-10" : ""}`}>
+        {project.logo && (
+          <div className={`relative z-10 -mt-13 mb-3 ${wide ? "md:mt-0" : ""}`}>
+            <ProjectLogo src={project.logo} title={project.title} />
+          </div>
+        )}
         <p className="text-xs font-medium text-muted">
           {[project.role, formatMonth(project.date)].filter(Boolean).join(" · ")}
         </p>

@@ -4,7 +4,7 @@ description: "Clonación de voz y texto a voz 100 % local con interfaz web: 10 s
 date: "2026-09-11"
 role: "Desarrollo completo"
 stack: ["Python", "llama.cpp", "Qwen3-TTS", "HTML/CSS/JS", "ffmpeg"]
-image: "/proyectos/clonador-de-voz.png"
+image: "/proyectos/clonador-de-voz.webp"
 featured: true
 ---
 

@@ -2,7 +2,15 @@ import Image from "next/image";
 import type { ProjectMeta } from "@/lib/projects";
 
 // Imagen del proyecto o, si no tiene, una portada generada en el estilo del sitio.
-export function ProjectCover({ project, priority = false }: { project: ProjectMeta; priority?: boolean }) {
+export function ProjectCover({
+  project,
+  priority = false,
+  sizes = "(min-width: 1024px) 560px, 100vw",
+}: {
+  project: ProjectMeta;
+  priority?: boolean;
+  sizes?: string;
+}) {
   if (project.image) {
     return (
       <Image
@@ -10,8 +18,9 @@ export function ProjectCover({ project, priority = false }: { project: ProjectMe
         alt={`Captura del proyecto ${project.title}`}
         fill
         priority={priority}
-        sizes="(min-width: 1024px) 560px, 100vw"
-        className="object-cover"
+        sizes={sizes}
+        quality={90}
+        className="object-cover object-top"
       />
     );
   }

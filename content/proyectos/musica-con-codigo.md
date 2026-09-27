@@ -4,7 +4,7 @@ description: "Pista musical de 1:36 generada íntegramente con código en el nav
 date: "2026-09-15"
 role: "Desarrollo y composición"
 stack: ["JavaScript", "Tone.js", "Web Audio API"]
-image: "/proyectos/musica-con-codigo.png"
+image: "/proyectos/musica-con-codigo.webp"
 featured: false
 ---
 
