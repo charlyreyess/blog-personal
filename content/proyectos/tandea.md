@@ -7,6 +7,7 @@ stack: ["Node.js", "Express", "PostgreSQL", "Sequelize", "Flutter", "Conekta", "
 image: "/proyectos/tandea.webp"
 url: "https://tandea-ed3.pages.dev/"
 featured: true
+order: 1
 ---
 
 ## El reto

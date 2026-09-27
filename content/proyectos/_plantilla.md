@@ -13,6 +13,7 @@ image: "/proyectos/tienda-online.png"  # opcional: si no hay, se genera una port
 url: "https://ejemplo.com"             # opcional: demo o web en producción
 repo: "https://github.com/usuario/repo" # opcional: código fuente
 featured: false               # true = aparece en la portada
+order: 3                      # opcional: posición fija (1 = primero); sin order van después, por fecha
 draft: false                  # true = oculto
 ---
 

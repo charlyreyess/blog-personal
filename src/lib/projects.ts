@@ -26,6 +26,7 @@ export type ProjectMeta = {
   url?: string;
   repo?: string;
   featured: boolean;
+  order?: number;
 };
 
 export type Project = ProjectMeta & { html: string };
@@ -48,6 +49,7 @@ function readProjectFile(slug: string) {
     url: optional(data.url),
     repo: optional(data.repo),
     featured: data.featured === true,
+    order: typeof data.order === "number" ? data.order : undefined,
   };
   return { meta, content, draft: data.draft === true };
 }
@@ -60,8 +62,13 @@ export function getAllProjects(): ProjectMeta[] {
     .map((file) => readProjectFile(file.replace(/\.md$/, "")))
     .filter((project) => !project.draft)
     .map((project) => project.meta)
-    // Destacados primero y, dentro de cada grupo, del más reciente al más antiguo.
-    .sort((a, b) => Number(b.featured) - Number(a.featured) || b.date.localeCompare(a.date));
+    // Primero los que tienen "order" (1, 2, 3…), luego los destacados y después por fecha.
+    .sort(
+      (a, b) =>
+        (a.order ?? Infinity) - (b.order ?? Infinity) ||
+        Number(b.featured) - Number(a.featured) ||
+        b.date.localeCompare(a.date),
+    );
 }
 
 export async function getProject(slug: string): Promise<Project | null> {
