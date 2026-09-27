@@ -6,7 +6,7 @@ role: "Diseño y desarrollo"
 stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Vercel"]
 url: ""
 repo: ""
-featured: true
+featured: false
 ---
 
 ## El reto

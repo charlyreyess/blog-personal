@@ -52,7 +52,7 @@ export const site = {
     { title: "Lanzamiento", description: "Publico, mido el rendimiento y te dejo todo listo para crecer." },
   ],
 
-  skills: ["TypeScript", "React", "Next.js", "Tailwind CSS", "Node.js", "PostgreSQL", "Supabase", "Vercel"],
+  skills: ["Java", "Python", "JavaScript", "TypeScript", "Node.js", "Next.js", "Flutter", "FastAPI", "PostgreSQL", "MySQL", "Docker", "Supabase"],
 } as const;
 
 export const socialLinks = site.social.filter((link) => link.href);

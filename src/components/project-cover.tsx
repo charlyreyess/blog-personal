@@ -27,7 +27,10 @@ export function ProjectCover({ project, priority = false }: { project: ProjectMe
         <path d="M200 225 C 250 150, 300 110, 350 120 C 380 128, 395 160, 400 175 V 225 Z" className="fill-grass" />
         <path d="M0 225 V 205 C 40 185, 90 190, 120 205 C 160 185, 220 190, 250 210 C 300 190, 360 195, 400 212 V 225 Z" className="fill-cloud" />
       </svg>
-      <span className="outline-display relative px-6 text-center text-4xl sm:text-5xl">{project.title}</span>
+      {/* Solo el nombre corto (lo que va antes de " — ") para que la portada respire */}
+      <span className="outline-display relative px-6 text-center text-4xl sm:text-5xl">
+        {project.title.split(" — ")[0]}
+      </span>
     </div>
   );
 }

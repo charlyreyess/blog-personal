@@ -50,7 +50,8 @@ export function getAllProjects(): ProjectMeta[] {
     .map((file) => readProjectFile(file.replace(/\.md$/, "")))
     .filter((project) => !project.draft)
     .map((project) => project.meta)
-    .sort((a, b) => b.date.localeCompare(a.date));
+    // Destacados primero y, dentro de cada grupo, del más reciente al más antiguo.
+    .sort((a, b) => Number(b.featured) - Number(a.featured) || b.date.localeCompare(a.date));
 }
 
 export async function getProject(slug: string): Promise<Project | null> {
