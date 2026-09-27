@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { getBio } from "@/lib/bio";
-import { site } from "@/lib/site";
+import { site, socialLinks } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Sobre mí",
@@ -71,7 +71,7 @@ export default async function AboutPage() {
                   {site.email}
                 </a>
               </li>
-              {site.social.map((link) => (
+              {socialLinks.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">
                     {link.label} ↗

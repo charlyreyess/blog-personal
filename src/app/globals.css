@@ -110,6 +110,14 @@
   letter-spacing: -0.02em;
 }
 
+/* Números con contorno en el color de acento (decorativos) */
+.outline-accent {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--accent);
+  font-weight: 600;
+  line-height: 1;
+}
+
 html {
   scroll-behavior: smooth;
 }

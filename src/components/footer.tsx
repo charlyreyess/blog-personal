@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { site } from "@/lib/site";
+import { site, socialLinks } from "@/lib/site";
 
 const pages = [
   { href: "/", label: "Inicio" },
   { href: "/blog", label: "Blog" },
   { href: "/proyectos", label: "Proyectos" },
   { href: "/sobre-mi", label: "Sobre mí" },
+  { href: "/contacto", label: "Contacto" },
 ];
 
 export function Footer() {
@@ -43,7 +44,7 @@ export function Footer() {
                 {site.email}
               </a>
             </li>
-            {site.social.map((link) => (
+            {socialLinks.map((link) => (
               <li key={link.label}>
                 <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">
                   {link.label} ↗

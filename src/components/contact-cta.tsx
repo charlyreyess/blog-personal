@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { SkyScene } from "@/components/sky-scene";
 
@@ -30,16 +31,16 @@ export function ContactCta({ email }: { email: string }) {
           Estoy abierto a colaboraciones, proyectos freelance y nuevas oportunidades. Escríbeme y lo platicamos.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <a
-            href={`mailto:${email}`}
-            className="rounded-md bg-accent px-6 py-3 font-medium text-on-accent shadow-lg shadow-accent/25 transition-transform hover:-translate-y-0.5"
+          <Link
+            href="/contacto"
+            className="rounded-md bg-accent px-6 py-3 font-semibold text-on-accent shadow-lg shadow-accent/25 transition-transform hover:-translate-y-0.5"
           >
-            Escríbeme
-          </a>
+            Contactar
+          </Link>
           <button
             type="button"
             onClick={copyEmail}
-            className="rounded-md bg-surface px-6 py-3 font-medium text-heading transition-transform hover:-translate-y-0.5"
+            className="rounded-md bg-surface px-6 py-3 font-semibold text-heading transition-transform hover:-translate-y-0.5"
           >
             <span aria-live="polite">{copied ? "¡Email copiado!" : "Copiar email"}</span>
           </button>

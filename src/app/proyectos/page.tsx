@@ -25,7 +25,7 @@ export default function ProjectsPage() {
         {projects.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2">
             {projects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
+              <ProjectCard key={project.slug} project={project} wide={projects.length === 1} />
             ))}
           </div>
         ) : (

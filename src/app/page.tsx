@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ContactCta } from "@/components/contact-cta";
+import { Newsletter } from "@/components/newsletter";
 import { PostCard } from "@/components/post-card";
 import { ProjectCard } from "@/components/project-card";
-import { Newsletter } from "@/components/newsletter";
+import { SectionHeading } from "@/components/section-heading";
 import { SkyScene } from "@/components/sky-scene";
 import { getAllPosts } from "@/lib/posts";
 import { getAllProjects } from "@/lib/projects";
@@ -27,53 +28,95 @@ const icons = {
 };
 
 export default function HomePage() {
-  const posts = getAllPosts().slice(0, 6);
+  const posts = getAllPosts().slice(0, 3);
   const allProjects = getAllProjects();
   const featured = allProjects.filter((project) => project.featured);
   const projects = (featured.length > 0 ? featured : allProjects).slice(0, 4);
 
   return (
     <>
+      {/* Presentación */}
       <section className="relative isolate overflow-hidden bg-sky">
         <SkyScene />
-        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-56 sm:px-6 sm:pt-24 md:pb-40 lg:pb-48">
-          {/* Texto decorativo dibujado con CSS (no es contenido) */}
-          <span
-            aria-hidden
-            data-text="¡Hola!"
-            className="outline-display block text-[5.5rem] before:content-[attr(data-text)] sm:text-[9rem] lg:text-[11rem]"
-          />
-          <h1 className="mt-4 max-w-xl text-3xl font-bold text-balance text-sky-ink sm:text-5xl">
-            Soy {site.name}, {site.role.toLowerCase()}.
+        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-60 sm:px-6 sm:pt-24 md:pb-44 lg:pt-28 lg:pb-52">
+          <p className="inline-flex items-center gap-2 rounded-full bg-surface/80 px-3.5 py-1.5 text-sm font-medium text-heading shadow-card backdrop-blur">
+            <span aria-hidden className="size-2 rounded-full bg-grass ring-4 ring-grass/25" />
+            {site.name} · {site.role} en {site.location}
+          </p>
+          <h1 className="mt-6 max-w-2xl text-4xl leading-[1.1] font-bold tracking-tight text-balance text-sky-ink sm:text-5xl lg:text-6xl">
+            {site.headline}
           </h1>
-          <p className="mt-5 max-w-md text-lg leading-relaxed font-medium text-pretty text-sky-ink/80">{site.tagline}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/blog"
-              className="rounded-md bg-accent px-6 py-3 font-medium text-on-accent shadow-lg shadow-accent/25 transition-transform hover:-translate-y-0.5"
-            >
-              Leer el blog
-            </Link>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed font-medium text-pretty text-sky-ink/80">{site.intro}</p>
+          <div className="mt-9 flex flex-wrap items-center gap-3">
             <Link
               href="/proyectos"
-              className="rounded-md bg-surface px-6 py-3 font-medium text-heading transition-transform hover:-translate-y-0.5"
+              className="rounded-md bg-accent px-6 py-3.5 font-semibold text-on-accent shadow-lg shadow-accent/25 transition-transform hover:-translate-y-0.5"
             >
               Ver proyectos
             </Link>
+            <Link
+              href="/contacto"
+              className="rounded-md bg-surface px-6 py-3.5 font-semibold text-heading shadow-card transition-transform hover:-translate-y-0.5"
+            >
+              Hablemos de tu proyecto
+            </Link>
+            {site.cv && (
+              <a href={site.cv} download className="px-2 py-3 font-semibold text-sky-ink underline-offset-4 hover:underline">
+                Descargar CV ↓
+              </a>
+            )}
           </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <section aria-labelledby="que-hago" className="pt-16">
-          <p className="text-sm font-semibold text-accent">Servicios</p>
-          <h2 id="que-hago" className="mt-1 text-3xl font-bold text-heading">
-            Qué hago
+      {/* Stack */}
+      <section aria-labelledby="stack" className="border-b border-line bg-surface">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-7 sm:px-6 md:flex-row md:items-center md:gap-8">
+          <h2 id="stack" className="shrink-0 text-xs font-semibold tracking-widest text-muted uppercase">
+            Tecnologías con las que trabajo
           </h2>
-          <ul className="mt-8 grid gap-6 md:grid-cols-3">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-heading">
+            {site.skills.map((skill) => (
+              <li key={skill}>{skill}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        {/* Proyectos */}
+        {projects.length > 0 && (
+          <section aria-labelledby="proyectos" className="pt-20 sm:pt-24">
+            <SectionHeading
+              id="proyectos"
+              eyebrow="Portafolio"
+              title="Proyectos destacados"
+              description="Una selección de trabajos: el problema, la solución y el resultado."
+              link={{ href: "/proyectos", label: "Ver todos los proyectos" }}
+            />
+            <div className="grid gap-6 md:grid-cols-2">
+              {projects.map((project) => (
+                <ProjectCard key={project.slug} project={project} wide={projects.length === 1} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Servicios */}
+        <section aria-labelledby="servicios" className="pt-20 sm:pt-24">
+          <SectionHeading
+            id="servicios"
+            eyebrow="Servicios"
+            title="En qué te puedo ayudar"
+            description="Me involucro en todo el ciclo del proyecto para que el resultado sea coherente de principio a fin."
+          />
+          <ul className="grid gap-6 md:grid-cols-3">
             {site.services.map((service) => (
-              <li key={service.title} className="reveal rounded-lg border border-line bg-surface p-6 shadow-card">
-                <span className="grid size-12 place-items-center rounded-lg bg-accent-soft text-accent">
+              <li
+                key={service.title}
+                className="reveal group rounded-lg border border-line bg-surface p-7 shadow-card transition-colors hover:border-accent/40"
+              >
+                <span className="grid size-12 place-items-center rounded-lg bg-accent-soft text-accent transition-colors group-hover:bg-accent group-hover:text-on-accent">
                   <svg
                     aria-hidden
                     viewBox="0 0 24 24"
@@ -94,47 +137,51 @@ export default function HomePage() {
           </ul>
         </section>
 
-        <section aria-labelledby="ultimos" className="pt-20">
-          <div className="mb-8 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold text-accent">Blog</p>
-              <h2 id="ultimos" className="mt-1 text-3xl font-bold text-heading">
-                Últimos artículos
-              </h2>
-            </div>
-            <Link href="/blog" className="shrink-0 text-sm font-medium whitespace-nowrap text-accent hover:underline">
-              Ver todos →
-            </Link>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <PostCard key={post.slug} post={post} />
+        {/* Proceso */}
+        <section aria-labelledby="proceso" className="pt-20 sm:pt-24">
+          <SectionHeading
+            id="proceso"
+            eyebrow="Proceso"
+            title="Cómo trabajo"
+            description="Un proceso claro y transparente, con avances que puedes revisar en cada etapa."
+          />
+          <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {site.process.map((step, index) => (
+              <li key={step.title} className="reveal relative rounded-lg bg-surface p-6 shadow-card">
+                <span
+                  aria-hidden
+                  data-text={String(index + 1).padStart(2, "0")}
+                  className="outline-accent block text-5xl before:content-[attr(data-text)]"
+                />
+                <h3 className="mt-4 text-lg font-semibold text-heading">
+                  <span className="sr-only">Paso {index + 1}: </span>
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{step.description}</p>
+              </li>
             ))}
-          </div>
+          </ol>
         </section>
 
-        {projects.length > 0 && (
-          <section aria-labelledby="proyectos" className="pt-20">
-            <div className="mb-8 flex items-end justify-between gap-4">
-              <div>
-                <p className="text-sm font-semibold text-accent">Portafolio</p>
-                <h2 id="proyectos" className="mt-1 text-3xl font-bold text-heading">
-                  Proyectos destacados
-                </h2>
-              </div>
-              <Link href="/proyectos" className="shrink-0 text-sm font-medium whitespace-nowrap text-accent hover:underline">
-                Ver todos →
-              </Link>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
+        {/* Blog */}
+        {posts.length > 0 && (
+          <section aria-labelledby="ultimos" className="pt-20 sm:pt-24">
+            <SectionHeading
+              id="ultimos"
+              eyebrow="Blog"
+              title="Últimos artículos"
+              description="Guías prácticas y aprendizajes sobre desarrollo y diseño web."
+              link={{ href: "/blog", label: "Ir al blog" }}
+            />
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post) => (
+                <PostCard key={post.slug} post={post} />
               ))}
             </div>
           </section>
         )}
 
-        <div className="mt-20">
+        <div className="mt-24">
           <ContactCta email={site.email} />
         </div>
 
