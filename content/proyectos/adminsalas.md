@@ -5,6 +5,7 @@ date: "2026-09-22"
 role: "Evolución a la versión 2.0"
 client: "Universidad del Mar"
 stack: ["Java", "Swing", "MySQL", "LaTeX", "Inno Setup"]
+image: "/proyectos/adminsalas.webp"
 featured: false
 ---
 
@@ -21,6 +22,8 @@ Evolucioné el sistema a **AdminSalas 2.0**, con un nuevo menú principal y mód
 - **Consultas:** accesos a los equipos, amonestados e historial de amonestaciones.
 - **Servidor de mensajes:** envío de avisos a alumnos y docentes, incluido el mensaje de bienvenida.
 - Importación de alumnos, control de impresiones e impresoras, carreras, grupos y cambio de semestre.
+
+![Menú de Consultas de AdminSalas](/proyectos/adminsalas-menu-consultas.webp)
 
 ## Resultado
 

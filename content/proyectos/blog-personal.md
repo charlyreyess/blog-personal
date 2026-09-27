@@ -6,6 +6,7 @@ role: "Diseño y desarrollo"
 stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Vercel"]
 url: ""
 repo: ""
+image: "/proyectos/blog-personal.webp"
 featured: false
 ---
 

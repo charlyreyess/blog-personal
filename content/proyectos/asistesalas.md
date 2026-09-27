@@ -5,6 +5,7 @@ date: "2026-09-20"
 role: "Mantenimiento, rediseño y nuevas funciones"
 client: "Universidad del Mar"
 stack: ["Java", "Swing", "MySQL", "JNA"]
+image: "/proyectos/asistesalas.webp"
 featured: true
 ---
 
@@ -22,6 +23,12 @@ Modernicé y amplié la aplicación que corre en cada equipo de la sala:
 - Manejo de **apagado y cortes de energía**, y mensajes enviados de forma remota desde el sistema de administración.
 - **Optimización del acceso a MySQL** y corrección de errores de concurrencia en la interfaz Swing.
 - Integración con Windows mediante **JNA**.
+
+## Proceso de diseño
+
+Antes de elegir la pantalla final, exploré 15 propuestas de pantalla de acceso y las probé en las resoluciones reales de los equipos de la sala (1366×768 y 1280×1024).
+
+![Prototipos de la pantalla de acceso de AsisteSalas](/proyectos/asistesalas-prototipos.webp)
 
 ## Resultado
 

@@ -4,6 +4,8 @@ description: "Plataforma de ahorro grupal rotativo (tandas) con cobros en línea
 date: "2026-09-02"
 role: "Desarrollo full stack"
 stack: ["Node.js", "Express", "PostgreSQL", "Sequelize", "Flutter", "Conekta", "SPEI (STP)", "Supabase"]
+image: "/proyectos/tandea.webp"
+url: "https://tandea-ed3.pages.dev/"
 featured: true
 ---
 
@@ -21,6 +23,8 @@ Una plataforma completa, organizada como monorepo con API REST y aplicación Flu
 - **Cuentas y seguridad:** JWT, inicio de sesión con **Google**, `helmet` y limitación de peticiones en autenticación.
 - **Desglose fiscal** de cada aporte (aporte, comisión e IVA), notificaciones en la app y correo con Brevo.
 
+![Pantalla "¿Cómo funciona?" de Tandea](/proyectos/tandea-como-funciona.webp)
+
 ## Arquitectura
 
 | Pieza | Tecnología |
@@ -28,7 +32,7 @@ Una plataforma completa, organizada como monorepo con API REST y aplicación Flu
 | API | Node.js · Express · Sequelize · PostgreSQL |
 | Cliente | Flutter (web y móvil) |
 | Archivos | Supabase Storage |
-| Despliegue previsto | Railway (API) · Supabase (BD) · Cloudflare Pages (web) |
+| Despliegue | Cloudflare Pages (web, publicada) · Supabase (BD y archivos) · Railway (API) |
 
 ## Resultado
 

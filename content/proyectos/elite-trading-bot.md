@@ -4,6 +4,7 @@ description: "Bot de trading automatizado con estrategia Grid sobre Binance, con
 date: "2026-09-01"
 role: "Diseño de arquitectura y desarrollo"
 stack: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Redis", "Docker", "Binance API"]
+image: "/proyectos/elite-trading-bot.webp"
 featured: false
 ---
 
