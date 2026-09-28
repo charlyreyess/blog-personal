@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Poppins } from "next/font/google";
-import { notFound } from "next/navigation";
 import { BackToTop } from "@/components/back-to-top";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { hasLocale, htmlLang, locales, ogLocale } from "@/i18n/config";
+import { defaultLocale, hasLocale, htmlLang, locales, ogLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getAllPosts } from "@/lib/posts";
@@ -18,9 +17,11 @@ export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
+// Las páginas 404 genéricas (p. ej. /algo.xml) se renderizan sin idioma: se usa el español.
+const resolveLang = (value: string | undefined): Locale => (value && hasLocale(value) ? value : defaultLocale);
+
 export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Promise<Metadata> {
-  const { lang } = await params;
-  if (!hasLocale(lang)) return {};
+  const lang = resolveLang((await params).lang);
   const site = getSite(lang);
   return {
     metadataBase: new URL(site.url),
@@ -36,8 +37,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 export const viewport: Viewport = { themeColor: "#ffffff", colorScheme: "light" };
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
-  const { lang } = await params;
-  if (!hasLocale(lang)) notFound();
+  const lang = resolveLang((await params).lang);
   const t = getDictionary(lang);
   const showBlog = getAllPosts().length > 0;
 
