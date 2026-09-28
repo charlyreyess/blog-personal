@@ -31,5 +31,3 @@ Una aplicación de escritorio en Python que combina detección y seguimiento de 
 ## Resultado
 
 Una herramienta que cuenta objetos de forma fiable en video real, con un rendimiento de unos 17 FPS con el modelo rápido (*n*) y 9 FPS con el equilibrado (*s*), y que permite guardar tanto el video anotado como los datos para analizarlos después.
-
-Lo explico paso a paso en el artículo [Cómo construí un detector y contador de objetos con YOLO11](/blog/detector-objetos-yolo11).

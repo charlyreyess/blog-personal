@@ -1,6 +1,6 @@
 ---
-title: "Blog personal"
-description: "Este sitio: blog y portafolio con artículos en Markdown, newsletter y despliegue gratuito."
+title: "Portafolio personal"
+description: "Este sitio: portafolio con proyectos en Markdown, formulario de contacto por correo, newsletter y despliegue continuo."
 date: "2026-09-27"
 role: "Diseño y desarrollo"
 stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Vercel"]

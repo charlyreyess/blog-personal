@@ -9,13 +9,13 @@ const url = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/\/$/, "");
 writeFileSync(
   "emails/newsletter.html",
   newsletterEmailHtml({
-    saludo: "Nuevo artículo en el blog",
-    intro: "Hola 👋 Acabo de publicar algo nuevo que creo que te va a interesar:",
+    saludo: "Nuevo proyecto en mi portafolio",
+    intro: "Hola 👋 Acabo de publicar un proyecto nuevo que creo que te va a interesar:",
     articulo: {
-      titulo: "Cómo construí un detector y contador de objetos con YOLO11",
-      resumen: "Detección, seguimiento y conteo de personas y vehículos en tiempo real con Python, YOLO11, ByteTrack y una interfaz en Tkinter.",
-      url: `${url}/blog/detector-objetos-yolo11`,
-      imagen: `${url}/blog/detector-objetos-yolo11/opengraph-image`,
+      titulo: "Detector y contador de objetos en tiempo real",
+      resumen: "Aplicación que detecta, sigue y cuenta personas, vehículos y otros objetos en video o desde la cámara, con YOLO11 y ByteTrack.",
+      url: `${url}/proyectos/detector-objetos`,
+      imagen: `${url}/proyectos/detector-objetos/opengraph-image`,
       etiqueta: "Visión por computadora",
     },
   }),

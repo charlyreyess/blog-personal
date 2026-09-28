@@ -5,15 +5,16 @@ export function ContactCta() {
   return (
     <section
       aria-labelledby="contacto"
-      className="relative isolate overflow-hidden rounded-lg bg-sky px-6 pt-12 pb-24 text-center sm:px-12 sm:pb-28"
+      className="relative isolate overflow-hidden rounded-lg border border-accent/15 bg-sky px-6 py-14 text-center sm:px-12 sm:py-16"
     >
       <SkyScene variant="band" />
       <div className="relative">
         <h2 id="contacto" className="text-3xl font-bold text-balance text-sky-ink sm:text-4xl">
           ¿Tienes un proyecto en mente?
         </h2>
-        <p className="mx-auto mt-3 max-w-lg font-medium text-pretty text-sky-ink/80">
-          Estoy abierto a colaboraciones, proyectos freelance y nuevas oportunidades. Escríbeme y lo platicamos.
+        <p className="mx-auto mt-3 max-w-2xl font-medium text-pretty text-sky-ink/80">
+          Desarrollo aplicaciones web, móviles y de escritorio a la medida, desde el análisis de requisitos hasta la
+          puesta en producción. Cuéntame tu idea y te propongo la solución técnica, el alcance y los tiempos de entrega.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Link

@@ -9,7 +9,7 @@ const pages = [
   { href: "/contacto", label: "Contacto" },
 ];
 
-export function Footer() {
+export function Footer({ showBlog = true }: { showBlog?: boolean }) {
   return (
     <footer className="mt-24 border-t border-line bg-surface">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 text-sm sm:grid-cols-[1.5fr_1fr_1fr] sm:px-6">
@@ -26,7 +26,7 @@ export function Footer() {
         <nav aria-label="Pie de página">
           <p className="font-semibold text-heading">Navegación</p>
           <ul className="mt-3 space-y-2">
-            {pages.map((page) => (
+            {pages.filter((page) => showBlog || page.href !== "/blog").map((page) => (
               <li key={page.href}>
                 <Link href={page.href} className="text-muted hover:text-accent">
                   {page.label}

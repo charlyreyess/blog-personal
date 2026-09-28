@@ -86,7 +86,7 @@ export function layout(opts: {
     </td></tr>
 
     <tr><td style="background:${C.surface};border-radius:12px;overflow:hidden;border:1px solid ${C.line}">
-      <img src="${url}/email/cabecera.png" width="600" alt="" style="display:block;width:100%;max-width:600px;height:auto;border:0;border-radius:12px 12px 0 0">
+      <img src="${url}/email/cabecera-tech.png" width="600" alt="" style="display:block;width:100%;max-width:600px;height:auto;border:0;border-radius:12px 12px 0 0">
       <div style="padding:28px 32px 32px">
         <p style="margin:0 0 8px;font-family:${MONO};font-size:13px;font-weight:600;color:${C.accent}"><span style="color:${C.muted}">//</span> ${escapeHtml(opts.eyebrow)}</p>
         <h1 style="margin:0 0 16px;font-family:${SANS};font-size:24px;line-height:1.3;font-weight:700;color:${C.ink}">${escapeHtml(opts.title)}</h1>
@@ -170,7 +170,7 @@ export function newsletterEmailHtml(n: {
           ${imagen}${etiqueta}
           <h2 style="margin:0 0 8px;font-family:${SANS};font-size:19px;line-height:1.35;font-weight:700;color:${C.ink}"><a href="${a.url}" style="color:${C.ink};text-decoration:none">${escapeHtml(a.titulo)}</a></h2>
           <p style="margin:0;font-family:${SANS};font-size:14px;line-height:1.65;color:${C.muted}">${escapeHtml(a.resumen)}</p>
-          ${button("Leer artículo →", a.url)}
+          ${button("Ver más →", a.url)}
         </td></tr>
       </table>`,
     footerNote: `Recibes este correo porque te suscribiste a la newsletter de ${site.name}. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:${C.muted}">Darme de baja</a>`,

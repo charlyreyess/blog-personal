@@ -3,10 +3,10 @@ import { SkyScene } from "@/components/sky-scene";
 
 export default function NotFound() {
   return (
-    <section className="relative isolate min-h-[calc(100dvh-4rem)] overflow-hidden bg-sky">
+    <section className="relative isolate overflow-hidden bg-sky">
       <SkyScene />
-      <div className="relative mx-auto max-w-6xl px-4 pt-12 pb-64 sm:px-6 sm:pt-20">
-        <p className="outline-display text-[8rem] sm:text-[15rem]">404</p>
+      <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-24 sm:px-6 sm:pt-24">
+        <p aria-hidden data-text="404" className="outline-accent text-[7rem] leading-none before:content-[attr(data-text)] sm:text-[12rem]" />
         <p className="mt-4 inline-block rounded-md bg-[#0d1117]/90 px-4 py-2 font-mono text-sm text-[#e6edf3]">
           <span className="text-[#7ee787]">$</span> cd esta-pagina
           <br />

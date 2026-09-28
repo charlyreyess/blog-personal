@@ -37,6 +37,7 @@ function readPostFile(slug: string) {
 }
 
 export function getAllPosts(): PostMeta[] {
+  if (!fs.existsSync(POSTS_DIR)) return [];
   return fs
     .readdirSync(POSTS_DIR)
     .filter(isContentFile)

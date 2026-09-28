@@ -19,6 +19,12 @@ const icons = {
       <path d="M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6" />
     </>
   ),
+  desktop: (
+    <>
+      <rect x="2" y="4" width="20" height="13" rx="2" />
+      <path d="M8 21h8M12 17v4M6 8h5M6 11h8" />
+    </>
+  ),
   bot: (
     <>
       <rect x="4" y="8" width="16" height="12" rx="3" />
@@ -46,17 +52,23 @@ export default function HomePage() {
   const allProjects = getAllProjects();
   const featured = allProjects.filter((project) => project.featured);
   const projects = (featured.length > 0 ? featured : allProjects).slice(0, 4);
+  const stats = [
+    { value: allProjects.length, label: "Proyectos en el portafolio" },
+    { value: site.skills.length, label: "Tecnologías en mi stack" },
+    { value: 3, label: "Plataformas: web, móvil y escritorio" },
+    { value: "E2E", label: "Del diseño al despliegue" },
+  ];
 
   return (
     <>
       {/* Presentación */}
       <section className="relative isolate overflow-hidden bg-sky">
         <SkyScene />
-        <div className="relative mx-auto grid max-w-6xl items-start gap-10 px-4 pt-16 pb-60 sm:px-6 sm:pt-24 md:pb-44 lg:grid-cols-[1fr_26rem] lg:pt-28 lg:pb-52">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pt-16 pb-20 sm:px-6 sm:pt-24 lg:grid-cols-[1fr_26rem] lg:pt-28 lg:pb-28">
           <div>
-          <p className="inline-flex items-center gap-2 rounded-full bg-surface/80 px-3.5 py-1.5 text-sm font-medium text-heading shadow-card backdrop-blur">
-            <span aria-hidden className="size-2 rounded-full bg-grass ring-4 ring-grass/25" />
-            {site.name} · {site.role} en {site.location}
+          <p className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-surface/80 px-3.5 py-1.5 font-mono text-xs font-medium text-heading shadow-card backdrop-blur sm:text-sm">
+            <span aria-hidden className="size-2 rounded-full bg-[#22c55e] ring-4 ring-[#22c55e]/20" />
+            {site.heroLabel}
           </p>
           <h1 className="mt-6 max-w-2xl text-4xl leading-[1.1] font-bold tracking-tight text-balance text-sky-ink sm:text-5xl lg:text-6xl">
             {site.headline}
@@ -83,7 +95,7 @@ export default function HomePage() {
             )}
           </div>
           </div>
-          <div className="hidden lg:block lg:pt-4">
+          <div className="hidden lg:block">
             <TerminalCard />
           </div>
         </div>
@@ -105,6 +117,18 @@ export default function HomePage() {
       </section>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        {/* Cifras */}
+        <section aria-label="En cifras" className="pt-14">
+          <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col-reverse rounded-lg border border-line bg-surface p-5 shadow-card">
+                <dt className="mt-1 text-sm text-muted">{stat.label}</dt>
+                <dd className="font-mono text-3xl font-bold text-accent">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
         {/* Proyectos */}
         {projects.length > 0 && (
           <section aria-labelledby="proyectos" className="pt-20 sm:pt-24">
@@ -131,7 +155,7 @@ export default function HomePage() {
             title="En qué te puedo ayudar"
             description="Me involucro en todo el ciclo del proyecto para que el resultado sea coherente de principio a fin."
           />
-          <ul className="grid gap-6 md:grid-cols-3">
+          <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {site.services.map((service) => (
               <li
                 key={service.title}
@@ -153,9 +177,50 @@ export default function HomePage() {
                 </span>
                 <h3 className="mt-5 text-lg font-semibold text-heading">{service.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{service.description}</p>
+                <ul className="mt-4 flex flex-wrap gap-1.5 font-mono text-xs">
+                  {service.tags.map((tag) => (
+                    <li key={tag} className="rounded bg-paper px-2 py-1 text-heading ring-1 ring-line">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* Arquitectura */}
+        <section aria-labelledby="arquitectura" className="pt-20 sm:pt-24">
+          <SectionHeading
+            id="arquitectura"
+            eyebrow="Arquitectura"
+            title="De punta a punta"
+            description="Me encargo de todas las capas de una aplicación, para que funcionen juntas desde el primer día."
+          />
+          <ol className="relative grid gap-4 md:grid-cols-4">
+            <div aria-hidden className="absolute top-9 right-[12%] left-[12%] hidden h-px border-t-2 border-dashed border-accent/30 md:block" />
+            {site.layers.map((layer, index) => (
+              <li key={layer.name} className="reveal relative rounded-lg border border-line bg-surface p-5 shadow-card">
+                <div className="flex items-center gap-3">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-md bg-accent font-mono text-sm font-bold text-on-accent">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="font-semibold text-heading">{layer.name}</h3>
+                    <p className="font-mono text-xs text-muted">{layer.detail}</p>
+                  </div>
+                </div>
+                <ul className="mt-4 space-y-1.5 font-mono text-sm text-heading">
+                  {layer.tech.map((tech) => (
+                    <li key={tech} className="flex items-center gap-2">
+                      <span aria-hidden className="text-accent">▸</span>
+                      {tech}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
         </section>
 
         {/* Proceso */}

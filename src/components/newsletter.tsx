@@ -28,9 +28,9 @@ export function Newsletter() {
 
   return (
     <section id="newsletter" className="relative scroll-mt-24 overflow-hidden rounded-lg bg-accent p-7 text-on-accent shadow-card sm:p-12">
-      <h2 className="text-2xl font-bold sm:text-3xl">Recibe los nuevos artículos</h2>
+      <h2 className="text-2xl font-bold sm:text-3xl">Recibe novedades</h2>
       <p className="mt-2 max-w-prose opacity-90">
-        Un email cuando publico algo nuevo. Sin spam, y puedes darte de baja cuando quieras.
+        Un correo cuando publique un proyecto o artículo nuevo. Sin spam y con baja en un clic.
       </p>
       <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row">
         {/* Campo trampa para bots: las personas no lo ven ni lo rellenan */}

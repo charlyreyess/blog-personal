@@ -12,9 +12,10 @@ const nav = [
   { href: "/sobre-mi", label: "Sobre mí" },
 ];
 
-export function Header() {
+export function Header({ showBlog = true }: { showBlog?: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const links = showBlog ? nav : nav.filter((item) => item.href !== "/blog");
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   // Cierra el menú móvil con Escape
@@ -44,7 +45,7 @@ export function Header() {
         <div className="flex items-center gap-1 md:gap-2">
           <nav aria-label="Principal" className="hidden md:block">
             <ul className="flex items-center gap-1 text-sm font-medium">
-              {nav.map((item) => (
+              {links.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -84,7 +85,7 @@ export function Header() {
       {open && (
         <nav id="menu-movil" aria-label="Menú móvil" className="border-t border-line bg-surface md:hidden">
           <ul className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 text-base font-medium">
-            {[...nav, { href: "/contacto", label: "Contacto" }].map((item) => (
+            {[...links, { href: "/contacto", label: "Contacto" }].map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}

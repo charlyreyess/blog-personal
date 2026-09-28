@@ -17,11 +17,19 @@ export default function BlogPage() {
 
   return (
     <>
-      <PageHero eyebrow={`${posts.length} artículos publicados`} title="Blog">
+      <PageHero eyebrow="Blog" title="Blog">
         <p className="mt-4 max-w-xl text-lg font-medium text-sky-ink/80">Guías, notas y aprendizajes.</p>
       </PageHero>
 
       <div className="mx-auto max-w-6xl px-4 pt-10 sm:px-6">
+        {posts.length === 0 ? (
+          <div className="rounded-lg border border-line bg-surface p-10 text-center shadow-card">
+            <p className="font-mono text-sm text-accent">{"// próximamente"}</p>
+            <p className="mt-2 text-lg font-semibold text-heading">Pronto publicaré artículos sobre desarrollo de software.</p>
+            <p className="mt-1 text-muted">Mientras tanto, puedes ver mis proyectos.</p>
+          </div>
+        ) : (
+        <>
         {/* Sin JavaScript (o mientras carga) se ve la lista completa */}
         <Suspense
           fallback={
@@ -34,6 +42,8 @@ export default function BlogPage() {
         >
           <BlogExplorer posts={posts} tags={tags} />
         </Suspense>
+        </>
+        )}
       </div>
     </>
   );

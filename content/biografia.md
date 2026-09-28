@@ -3,8 +3,8 @@
 # Copia un bloque (desde "- period") para añadir un hito nuevo. "place" y "description" son opcionales.
 timeline:
   - period: "2026"
-    title: "Lanzo mi blog personal"
-    description: "Empiezo a publicar guías y aprendizajes sobre desarrollo de software."
+    title: "Lanzo mi portafolio"
+    description: "Reúno mis proyectos de desarrollo web, móvil, escritorio e inteligencia artificial."
   # - period: "2022 — 2026"
   #   title: "Desarrollador web"
   #   place: "Nombre de la empresa"
@@ -18,6 +18,6 @@ Soy **desarrollador de software Full Stack** en México y me apasiona convertir 
 
 He construido aplicaciones web y móviles, sistemas de escritorio en Java, APIs con Node.js y Python, integraciones de pago y herramientas de automatización con inteligencia artificial.
 
-En este blog comparto guías prácticas, experimentos y aprendizajes del día a día: desde cómo desplegar una web gratis hasta las decisiones de diseño detrás de cada proyecto.
+Me enfoco en construir software mantenible y bien probado, que resuelva problemas reales de negocio y que se pueda poner en producción con confianza.
 
 <!-- Escribe aquí tu biografía completa: cómo empezaste, qué te motiva, en qué te especializas y qué buscas ahora. Puedes usar **negritas**, listas y enlaces. -->

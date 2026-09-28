@@ -9,8 +9,10 @@
   --line: #ebedf2;
   --accent: #0251fe;
   --accent-soft: #e6eeff;
-  --sky: #86daf0;
-  --sky-ink: #1d2a4a;
+  --sky: #eaf1ff;
+  --sky-ink: #16213e;
+  --grid: rgba(2, 81, 254, 0.09);
+  --glow: rgba(2, 81, 254, 0.18);
   --cloud: #ffffff;
   --grass: #74c23d;
   --pine: #1f7a32;
@@ -33,8 +35,10 @@
     --line: #2a2d45;
     --accent: #6f9bff;
     --accent-soft: #1c2550;
-    --sky: #13305c;
+    --sky: #0c1631;
     --sky-ink: #eef3ff;
+    --grid: rgba(111, 155, 255, 0.10);
+    --glow: rgba(111, 155, 255, 0.22);
     --cloud: #2b4a78;
     --grass: #2f6b3a;
     --pine: #1a4a25;
@@ -56,8 +60,10 @@
   --line: #2a2d45;
   --accent: #6f9bff;
   --accent-soft: #1c2550;
-  --sky: #13305c;
+  --sky: #0c1631;
   --sky-ink: #eef3ff;
+  --grid: rgba(111, 155, 255, 0.10);
+  --glow: rgba(111, 155, 255, 0.22);
   --cloud: #2b4a78;
   --grass: #2f6b3a;
   --pine: #1a4a25;
@@ -113,6 +119,16 @@
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
+}
+
+/* Fondo técnico: cuadrícula de plano (blueprint) que se desvanece hacia abajo */
+.bg-blueprint {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
 }
 
 /* Números con contorno en el color de acento (decorativos) */

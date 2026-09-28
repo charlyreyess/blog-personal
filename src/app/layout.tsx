@@ -4,6 +4,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { BackToTop } from "@/components/back-to-top";
 import { themeScript } from "@/components/theme-toggle";
+import { getAllPosts } from "@/lib/posts";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -28,6 +29,7 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const showBlog = getAllPosts().length > 0;
   return (
     <html lang="es-MX" className={`${sans.variable} ${mono.variable} antialiased`} suppressHydrationWarning>
       <head>
@@ -40,11 +42,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Saltar al contenido
         </a>
-        <Header />
+        <Header showBlog={showBlog} />
         <main id="contenido" className="flex-1">
           {children}
         </main>
-        <Footer />
+        <Footer showBlog={showBlog} />
         <BackToTop />
       </body>
     </html>
