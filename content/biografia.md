@@ -4,7 +4,7 @@
 timeline:
   - period: "2026"
     title: "Lanzo mi blog personal"
-    description: "Empiezo a publicar guías y aprendizajes sobre desarrollo web."
+    description: "Empiezo a publicar guías y aprendizajes sobre desarrollo de software."
   # - period: "2022 — 2026"
   #   title: "Desarrollador web"
   #   place: "Nombre de la empresa"
@@ -14,7 +14,9 @@ timeline:
   #   place: "Nombre de la universidad"
 ---
 
-Soy desarrollador web en México y me apasiona convertir ideas en productos rápidos, accesibles y bien diseñados.
+Soy **desarrollador de software Full Stack** en México y me apasiona convertir ideas en productos completos: desde la interfaz que usa la gente hasta la API, la base de datos y el despliegue.
+
+He construido aplicaciones web y móviles, sistemas de escritorio en Java, APIs con Node.js y Python, integraciones de pago y herramientas de automatización con inteligencia artificial.
 
 En este blog comparto guías prácticas, experimentos y aprendizajes del día a día: desde cómo desplegar una web gratis hasta las decisiones de diseño detrás de cada proyecto.
 

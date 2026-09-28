@@ -17,9 +17,9 @@ export function SectionHeading({
   return (
     <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div className="max-w-2xl">
-        <p className="flex items-center gap-2 text-sm font-semibold tracking-wide text-accent uppercase">
-          <span aria-hidden className="h-0.5 w-6 rounded-full bg-accent" />
-          {eyebrow}
+        <p className="font-mono text-sm font-semibold text-accent">
+          <span aria-hidden className="text-muted">{"// "}</span>
+          {eyebrow.toLowerCase()}
         </p>
         <h2 id={id} className="mt-3 text-3xl font-bold tracking-tight text-balance text-heading sm:text-4xl">
           {title}

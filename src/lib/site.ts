@@ -3,18 +3,19 @@
 export const site = {
   name: "Carlos Reyes",
   initials: "CR",
-  role: "Desarrollador web",
+  role: "Desarrollador de software Full Stack",
+  roleShort: "Desarrollador Full Stack",
   location: "México",
   email: "carskingdom84@gmail.com",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "es_MX",
 
   // Portada
-  headline: "Desarrollo sitios web rápidos, accesibles y pensados para convertir.",
+  headline: "Construyo software de punta a punta: del frontend a la base de datos.",
   intro:
-    "Ayudo a negocios y profesionales a llevar sus ideas a la web: del diseño al despliegue, con código limpio y un rendimiento que se nota.",
+    "Soy desarrollador Full Stack: diseño interfaces web y móviles, construyo APIs y automatizo procesos, con código limpio y un rendimiento que se nota.",
   // Descripción corta para buscadores, pie de página y tarjetas al compartir
-  tagline: "Desarrollador web en México. Proyectos, guías y aprendizajes sobre desarrollo y diseño web.",
+  tagline: "Desarrollador de software Full Stack en México. Proyectos, guías y aprendizajes sobre desarrollo de software.",
 
   // Ruta a tu CV en PDF dentro de /public (ej. "/cv-carlos-reyes.pdf"). Vacío = no se muestra el botón.
   cv: "",
@@ -25,22 +26,22 @@ export const site = {
     { label: "LinkedIn", href: "" },
   ],
 
-  // Servicios ("Qué hago"). icon: "code" | "design" | "rocket"
+  // Servicios ("Qué hago"). icon: "code" | "server" | "bot" | "design" | "rocket"
   services: [
     {
       icon: "code",
-      title: "Desarrollo web",
-      description: "Sitios y aplicaciones rápidas con React, Next.js y TypeScript, listas para crecer.",
+      title: "Frontend web y móvil",
+      description: "Interfaces rápidas y accesibles con Next.js, React y Flutter, adaptadas a cualquier pantalla.",
     },
     {
-      icon: "design",
-      title: "Diseño de interfaces",
-      description: "Interfaces claras, accesibles y adaptadas a cualquier pantalla, del boceto al código.",
+      icon: "server",
+      title: "Backend y APIs",
+      description: "APIs REST con Node.js, Python (FastAPI) y Java, bases de datos PostgreSQL y MySQL, y pagos en línea.",
     },
     {
-      icon: "rocket",
-      title: "Despliegue y rendimiento",
-      description: "Publicación en la nube, SEO técnico y optimización para que tu web cargue al instante.",
+      icon: "bot",
+      title: "Automatización e IA",
+      description: "Bots, integraciones con modelos de IA y herramientas que automatizan tareas repetitivas.",
     },
   ],
 

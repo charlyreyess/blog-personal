@@ -61,7 +61,10 @@ export function Footer() {
       </div>
       <div className="border-t border-line">
         <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-muted sm:px-6">
-          © {new Date().getFullYear()} {site.name} · {site.location}. Hecho con Next.js y desplegado en Vercel.
+          © {new Date().getFullYear()} {site.name} · {site.location}.{" "}
+          <span className="font-mono">
+            <span className="text-accent">&lt;/&gt;</span> con Next.js · desplegado en Vercel
+          </span>
         </p>
       </div>
     </footer>

@@ -5,12 +5,26 @@ import { PostCard } from "@/components/post-card";
 import { ProjectCard } from "@/components/project-card";
 import { SectionHeading } from "@/components/section-heading";
 import { SkyScene } from "@/components/sky-scene";
+import { TerminalCard } from "@/components/terminal-card";
 import { getAllPosts } from "@/lib/posts";
 import { getAllProjects } from "@/lib/projects";
 import { site } from "@/lib/site";
 
 const icons = {
   code: <path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14" />,
+  server: (
+    <>
+      <rect x="3" y="4" width="18" height="7" rx="2" />
+      <rect x="3" y="13" width="18" height="7" rx="2" />
+      <path d="M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6" />
+    </>
+  ),
+  bot: (
+    <>
+      <rect x="4" y="8" width="16" height="12" rx="3" />
+      <path d="M12 8V4M9 4h6M9 14h.01M15 14h.01M2 13v3M22 13v3" />
+    </>
+  ),
   design: (
     <>
       <path d="M12 19l7-7 3 3-7 7-3-3z" />
@@ -38,13 +52,15 @@ export default function HomePage() {
       {/* Presentación */}
       <section className="relative isolate overflow-hidden bg-sky">
         <SkyScene />
-        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-60 sm:px-6 sm:pt-24 md:pb-44 lg:pt-28 lg:pb-52">
+        <div className="relative mx-auto grid max-w-6xl items-start gap-10 px-4 pt-16 pb-60 sm:px-6 sm:pt-24 md:pb-44 lg:grid-cols-[1fr_26rem] lg:pt-28 lg:pb-52">
+          <div>
           <p className="inline-flex items-center gap-2 rounded-full bg-surface/80 px-3.5 py-1.5 text-sm font-medium text-heading shadow-card backdrop-blur">
             <span aria-hidden className="size-2 rounded-full bg-grass ring-4 ring-grass/25" />
             {site.name} · {site.role} en {site.location}
           </p>
           <h1 className="mt-6 max-w-2xl text-4xl leading-[1.1] font-bold tracking-tight text-balance text-sky-ink sm:text-5xl lg:text-6xl">
             {site.headline}
+            <span aria-hidden className="animate-blink ml-1 font-light text-accent">_</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed font-medium text-pretty text-sky-ink/80">{site.intro}</p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -66,16 +82,21 @@ export default function HomePage() {
               </a>
             )}
           </div>
+          </div>
+          <div className="hidden lg:block lg:pt-4">
+            <TerminalCard />
+          </div>
         </div>
       </section>
 
       {/* Stack */}
       <section aria-labelledby="stack" className="border-b border-line bg-surface">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-7 sm:px-6 md:flex-row md:items-center md:gap-8">
-          <h2 id="stack" className="shrink-0 text-xs font-semibold tracking-widest text-muted uppercase">
-            Tecnologías con las que trabajo
+          <h2 id="stack" className="shrink-0 font-mono text-xs font-semibold text-muted">
+            <span aria-hidden className="text-accent">&gt;_ </span>
+            stack --tecnologías
           </h2>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-heading">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm font-semibold text-heading">
             {site.skills.map((skill) => (
               <li key={skill}>{skill}</li>
             ))}

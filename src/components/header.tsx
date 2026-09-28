@@ -37,7 +37,7 @@ export function Header() {
           </span>
           <span className="leading-tight">
             <span className="block font-semibold text-heading">{site.name}</span>
-            <span className="block text-xs text-muted">{site.role}</span>
+            <span className="block font-mono text-xs text-muted">{site.roleShort}</span>
           </span>
         </Link>
 
