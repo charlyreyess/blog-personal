@@ -6,7 +6,6 @@ export const site = {
   role: "Desarrollador de software Full Stack",
   roleShort: "Desarrollador Full Stack",
   location: "México",
-  email: "carskingdom84@gmail.com",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "es_MX",
 

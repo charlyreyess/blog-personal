@@ -1,22 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
 import { SkyScene } from "@/components/sky-scene";
 
-export function ContactCta({ email }: { email: string }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copyEmail() {
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch {
-      window.location.href = `mailto:${email}`;
-    }
-  }
-
+export function ContactCta() {
   return (
     <section
       aria-labelledby="contacto"
@@ -37,13 +22,12 @@ export function ContactCta({ email }: { email: string }) {
           >
             Contactar
           </Link>
-          <button
-            type="button"
-            onClick={copyEmail}
+          <Link
+            href="/proyectos"
             className="rounded-md bg-surface px-6 py-3 font-semibold text-heading transition-transform hover:-translate-y-0.5"
           >
-            <span aria-live="polite">{copied ? "¡Email copiado!" : "Copiar email"}</span>
-          </button>
+            Ver proyectos
+          </Link>
         </div>
       </div>
     </section>

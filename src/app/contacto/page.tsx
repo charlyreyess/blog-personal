@@ -20,15 +20,9 @@ export default function ContactPage() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="relative -mt-12 grid gap-6 lg:grid-cols-[1fr_20rem]">
-          <ContactForm email={site.email} />
+          <ContactForm />
 
           <aside className="h-fit space-y-6 rounded-lg bg-surface p-6 shadow-card sm:p-8">
-            <div>
-              <h2 className="text-sm font-semibold text-heading">Email directo</h2>
-              <a href={`mailto:${site.email}`} className="mt-1 block break-all text-accent hover:underline">
-                {site.email}
-              </a>
-            </div>
             <div>
               <h2 className="text-sm font-semibold text-heading">Ubicación</h2>
               <p className="mt-1 text-muted">{site.location} · Trabajo en remoto</p>

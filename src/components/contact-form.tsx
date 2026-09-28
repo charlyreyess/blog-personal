@@ -8,7 +8,7 @@ type Status = { kind: "idle" | "loading" | "ok" | "error"; message?: string };
 const field =
   "mt-1.5 w-full rounded-md border border-line bg-paper px-4 py-3 text-ink placeholder:text-muted focus:border-accent focus:outline-none";
 
-export function ContactForm({ email }: { email: string }) {
+export function ContactForm() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -117,15 +117,7 @@ export function ContactForm({ email }: { email: string }) {
       </div>
 
       <p role="alert" aria-live="assertive" className="mt-4 min-h-5 text-sm font-medium text-heading">
-        {status.kind === "error" && (
-          <>
-            {status.message} También puedes escribirme a{" "}
-            <a href={`mailto:${email}`} className="text-accent underline underline-offset-2">
-              {email}
-            </a>
-            .
-          </>
-        )}
+        {status.kind === "error" && status.message}
       </p>
     </form>
   );

@@ -203,7 +203,7 @@ export default function HomePage() {
         )}
 
         <div className="mt-24">
-          <ContactCta email={site.email} />
+          <ContactCta />
         </div>
 
         <div className="mt-10">

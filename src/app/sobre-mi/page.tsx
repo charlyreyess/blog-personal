@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { getBio } from "@/lib/bio";
 import { site, socialLinks } from "@/lib/site";
@@ -67,9 +68,9 @@ export default async function AboutPage() {
             </p>
             <ul className="mt-5 space-y-2 border-t border-line pt-5 text-sm">
               <li>
-                <a href={`mailto:${site.email}`} className="break-all text-accent hover:underline">
-                  {site.email}
-                </a>
+                <Link href="/contacto" className="text-accent hover:underline">
+                  Escríbeme por el formulario →
+                </Link>
               </li>
               {socialLinks.map((link) => (
                 <li key={link.label}>

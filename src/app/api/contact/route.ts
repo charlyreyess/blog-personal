@@ -1,4 +1,5 @@
 import { projectTypes } from "@/lib/contact";
+import { isMailConfigured, sendContactEmail } from "@/lib/mail";
 import { getSupabase } from "@/lib/supabase";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,15 +28,36 @@ export async function POST(request: Request) {
     return Response.json({ message: "El mensaje debe tener entre 10 y 3000 caracteres." }, { status: 400 });
   }
 
+  // El mensaje se entrega por correo (Resend) y, si Supabase está configurado, también se guarda.
   const supabase = getSupabase();
-  if (!supabase) {
-    return Response.json({ message: "El formulario aún no está configurado." }, { status: 503 });
+  if (!isMailConfigured() && !supabase) {
+    console.error("Formulario de contacto sin configurar: faltan RESEND_API_KEY/CONTACT_TO_EMAIL o Supabase.");
+    return Response.json(
+      { message: "No se pudo enviar el mensaje en este momento. Inténtalo de nuevo más tarde." },
+      { status: 503 },
+    );
   }
 
-  const { error } = await supabase.from("contact_messages").insert({ name, email, type, message });
-  if (error) {
-    console.error("Error al guardar mensaje de contacto:", error.message);
-    return Response.json({ message: "No se pudo enviar el mensaje." }, { status: 500 });
+  let entregado = false;
+  if (isMailConfigured()) {
+    try {
+      await sendContactEmail({ name, email, type, message });
+      entregado = true;
+    } catch (e) {
+      console.error("Error al enviar el correo de contacto:", e);
+    }
+  }
+  if (supabase) {
+    const { error } = await supabase.from("contact_messages").insert({ name, email, type, message });
+    if (error) console.error("Error al guardar mensaje de contacto:", error.message);
+    else entregado = true;
+  }
+
+  if (!entregado) {
+    return Response.json(
+      { message: "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos." },
+      { status: 500 },
+    );
   }
 
   return Response.json({ message: "Gracias por escribir. Te responderé en 1 a 2 días hábiles." });

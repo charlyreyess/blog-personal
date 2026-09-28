@@ -40,9 +40,9 @@ export function Footer() {
           <p className="font-semibold text-heading">Contacto</p>
           <ul className="mt-3 space-y-2">
             <li>
-              <a href={`mailto:${site.email}`} className="break-all text-muted hover:text-accent">
-                {site.email}
-              </a>
+              <Link href="/contacto" className="text-muted hover:text-accent">
+                Formulario de contacto
+              </Link>
             </li>
             {socialLinks.map((link) => (
               <li key={link.label}>
@@ -61,10 +61,7 @@ export function Footer() {
       </div>
       <div className="border-t border-line">
         <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-muted sm:px-6">
-          © {new Date().getFullYear()} {site.name} · {site.location}.{" "}
-          <span className="font-mono">
-            <span className="text-accent">&lt;/&gt;</span> con Next.js · desplegado en Vercel
-          </span>
+          © {new Date().getFullYear()} {site.name}
         </p>
       </div>
     </footer>

@@ -110,10 +110,9 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
         <footer className="mt-8 rounded-lg border-l-4 border-accent bg-surface p-6 shadow-card">
           <p className="font-semibold text-heading">¿Te ha resultado útil?</p>
           <p className="mt-1 text-sm text-muted">
-            Escríbeme a{" "}
-            <a href={`mailto:${site.email}`} className="break-all text-accent underline underline-offset-2">
-              {site.email}
-            </a>{" "}
+            <Link href="/contacto" className="text-accent underline underline-offset-2">
+              Escríbeme
+            </Link>{" "}
             o <Link href="/#newsletter" className="text-accent underline underline-offset-2">suscríbete</Link> para
             recibir el próximo artículo.
           </p>
