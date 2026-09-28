@@ -1,10 +1,8 @@
 ---
 # Tu trayectoria, de la más reciente a la más antigua.
 # Copia un bloque (desde "- period") para añadir un hito nuevo. "place" y "description" son opcionales.
-timeline:
-  - period: "2026"
-    title: "Lanzo mi portafolio"
-    description: "Reúno mis proyectos de desarrollo web, móvil, escritorio e inteligencia artificial."
+# Vacía = no se muestra la sección «Trayectoria». Para activarla, quita los # de los ejemplos.
+timeline: []
   # - period: "2022 — 2026"
   #   title: "Desarrollador web"
   #   place: "Nombre de la empresa"
