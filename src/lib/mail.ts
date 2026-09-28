@@ -5,7 +5,9 @@
 //   CONTACT_TO_EMAIL  correo donde recibes los mensajes (no se muestra en la web)
 //   CONTACT_FROM      remitente opcional; por defecto el de pruebas de Resend
 
-import { contactEmailHtml, subscriberEmailHtml } from "@/lib/email-template";
+import { contactEmailHtml, replyEmailHtml, subscriberEmailHtml } from "@/lib/email-template";
+import { createReplyToken, isReplyConfigured } from "@/lib/reply-token";
+import { site } from "@/lib/site";
 
 export const isMailConfigured = () => Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL);
 
@@ -48,7 +50,12 @@ export async function sendContactEmail(data: { name: string; email: string; type
     to: [process.env.CONTACT_TO_EMAIL],
     reply_to: data.email,
     subject: `Nuevo mensaje de ${data.name} · ${data.type}`,
-    html: contactEmailHtml(data),
+    html: contactEmailHtml({
+      ...data,
+      replyUrl: isReplyConfigured()
+        ? `${site.url.replace(/\/$/, "")}/responder?t=${createReplyToken(data)}`
+        : undefined,
+    }),
     text: `Nombre: ${data.name}
 Email: ${data.email}
 Tipo: ${data.type}
@@ -57,5 +64,24 @@ ${data.message}`,
   });
   if (!res.ok) {
     throw new Error(`Resend respondió ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  }
+}
+
+// Envía la respuesta de Carlos con el diseño del sitio. Las respuestas del visitante vuelven a CONTACT_TO_EMAIL.
+export async function sendReplyEmail(d: { name: string; email: string; type: string; original: string; reply: string }) {
+  const res = await resend("/emails", {
+    from: process.env.CONTACT_FROM || `${site.name} <onboarding@resend.dev>`,
+    to: [d.email],
+    reply_to: process.env.CONTACT_TO_EMAIL,
+    subject: `Re: tu mensaje en mi portafolio · ${d.type}`,
+    html: replyEmailHtml(d),
+    text: `Hola, ${d.name}\n\n${d.reply}\n\n— ${site.name}\n\n> ${d.original.replace(/\n/g, "\n> ")}`,
+  });
+  if (!res.ok) {
+    const detalle = await res.text();
+    const error = new Error(`Resend respondió ${res.status}: ${detalle.slice(0, 300)}`);
+    (error as Error & { status?: number; detalle?: string }).status = res.status;
+    (error as Error & { status?: number; detalle?: string }).detalle = detalle;
+    throw error;
   }
 }

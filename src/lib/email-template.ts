@@ -108,7 +108,7 @@ export function layout(opts: {
 
 // ---------- Correos concretos ----------
 
-export function contactEmailHtml(d: { name: string; email: string; type: string; message: string }) {
+export function contactEmailHtml(d: { name: string; email: string; type: string; message: string; replyUrl?: string }) {
   const nombre = escapeHtml(d.name);
   return layout({
     preheader: `${d.name} te escribió sobre: ${d.type}`,
@@ -122,8 +122,11 @@ export function contactEmailHtml(d: { name: string; email: string; type: string;
         ["Proyecto", `<span style="display:inline-block;padding:3px 10px;background:${C.accentSoft};color:${C.accent};border-radius:6px;font-size:13px">${escapeHtml(d.type)}</span>`],
       ]) +
       quote(d.message) +
-      button(`Responder a ${nombre}`, `mailto:${escapeHtml(d.email)}?subject=${encodeURIComponent("Re: tu mensaje en mi portafolio")}`),
-    footerNote: "También puedes pulsar «Responder» en tu correo: la respuesta le llega directamente.",
+      (d.replyUrl
+        ? button(`Responder a ${nombre} con diseño`, d.replyUrl) +
+          `<p style="margin:10px 0 0;font-family:${SANS};font-size:12px;color:${C.muted}">El enlace es privado y caduca en 30 días. No lo reenvíes.</p>`
+        : button(`Responder a ${nombre}`, `mailto:${escapeHtml(d.email)}?subject=${encodeURIComponent("Re: tu mensaje en mi portafolio")}`)),
+    footerNote: "También puedes pulsar «Responder» en tu correo para contestar sin diseño.",
   });
 }
 
@@ -171,5 +174,33 @@ export function newsletterEmailHtml(n: {
         </td></tr>
       </table>`,
     footerNote: `Recibes este correo porque te suscribiste a la newsletter de ${site.name}. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:${C.muted}">Darme de baja</a>`,
+  });
+}
+
+// Respuesta de Carlos a quien escribió por el formulario: su texto, la cita del mensaje original y la firma.
+export function replyEmailHtml(d: { name: string; type: string; original: string; reply: string }) {
+  const url = site.url.replace(/\/$/, "");
+  const parrafos = d.reply
+    .trim()
+    .split(/\n{2,}/)
+    .map((p) => paragraph(escapeHtml(p).replace(/\n/g, "<br>")).replace(`color:${C.muted}`, `color:${C.ink}`))
+    .join("");
+  const firma = `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0 0;padding-top:20px;border-top:1px solid ${C.line};width:100%"><tr>
+      <td style="width:44px;vertical-align:top"><div style="width:40px;height:40px;line-height:40px;background:${C.accent};border-radius:10px;text-align:center;font-family:${SANS};font-size:15px;font-weight:700;color:#ffffff">${site.initials}</div></td>
+      <td style="padding-left:12px;font-family:${SANS};vertical-align:top">
+        <div style="font-size:15px;font-weight:600;color:${C.ink}">${site.name}</div>
+        <div style="font-family:${MONO};font-size:12px;color:${C.muted}">${site.role}</div>
+        <a href="${url}" style="font-size:13px;color:${C.accent};text-decoration:none">${url.replace(/^https?:\/\//, "")}</a>
+      </td></tr></table>`;
+  return layout({
+    preheader: d.reply.slice(0, 120),
+    eyebrow: "respuesta",
+    title: `Hola, ${d.name}`,
+    content:
+      parrafos +
+      firma +
+      `<p style="margin:28px 0 8px;font-family:${MONO};font-size:12px;color:${C.muted}">// tu mensaje · ${escapeHtml(d.type)}</p>` +
+      quote(d.original),
+    footerNote: "Puedes responder directamente a este correo.",
   });
 }
