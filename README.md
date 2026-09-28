@@ -1,5 +1,7 @@
 # Blog personal — Next.js + Vercel + Supabase
 
+**Web:** https://blog-personal-snowy.vercel.app · Cada `git push` a `main` se publica automáticamente en Vercel.
+
 Blog personal hecho con **Next.js 16 (App Router)**, **TypeScript** y **Tailwind CSS v4**. Los artículos son archivos Markdown y la newsletter guarda los emails en **Supabase**. Se despliega gratis en **Vercel** siguiendo la guía de [notfound404.es](https://www.notfound404.es/es/blog/desplegar-web-gratis).
 
 ## Desarrollo local
