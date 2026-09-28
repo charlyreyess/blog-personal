@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { BlogExplorer } from "@/components/blog-explorer";
 import { PageHero } from "@/components/page-hero";
 import { PostCard } from "@/components/post-card";
-import { assertLocale, type Locale } from "@/i18n/config";
+import { assertLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getAllPosts, getAllTags } from "@/lib/posts";

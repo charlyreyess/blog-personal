@@ -6,7 +6,7 @@ import { ProjectLogo } from "@/components/project-logo";
 import { SkyScene } from "@/components/sky-scene";
 import { formatMonth } from "@/lib/format";
 import { getAllProjects, getProject } from "@/lib/projects";
-import { assertLocale, localePath, type Locale } from "@/i18n/config";
+import { assertLocale, defaultLocale, hasLocale, localePath } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getSite } from "@/lib/site";
@@ -15,7 +15,7 @@ export const dynamicParams = false;
 
 // Se llama una vez por idioma (el layout genera "es" y "en").
 export async function generateStaticParams({ params }: { params: { lang: string } }) {
-  return getAllProjects(assertLocale(params.lang)).map((project) => ({ slug: project.slug }));
+  return getAllProjects(hasLocale(params.lang) ? params.lang : defaultLocale).map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/proyectos/[slug]">): Promise<Metadata> {

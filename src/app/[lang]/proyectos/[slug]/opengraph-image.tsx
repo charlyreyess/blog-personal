@@ -1,4 +1,4 @@
-import { assertLocale, type Locale } from "@/i18n/config";
+import { assertLocale, defaultLocale, hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { renderOgImage, ogSize } from "@/lib/og";
 import { getAllProjects } from "@/lib/projects";
@@ -8,7 +8,7 @@ export const size = ogSize;
 export const contentType = "image/png";
 
 export async function generateStaticParams({ params }: { params: { lang: string } }) {
-  return getAllProjects(assertLocale(params.lang)).map((project) => ({ slug: project.slug }));
+  return getAllProjects(hasLocale(params.lang) ? params.lang : defaultLocale).map((project) => ({ slug: project.slug }));
 }
 
 export default async function Image({ params }: { params: Promise<{ lang: string; slug: string }> }) {

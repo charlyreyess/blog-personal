@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { getBio } from "@/lib/bio";
-import { assertLocale, localePath, type Locale } from "@/i18n/config";
+import { assertLocale, localePath } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getSite, socialLinks } from "@/lib/site";

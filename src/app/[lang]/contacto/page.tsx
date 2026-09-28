@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
 import { PageHero } from "@/components/page-hero";
-import { assertLocale, type Locale } from "@/i18n/config";
+import { assertLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getSite, socialLinks } from "@/lib/site";

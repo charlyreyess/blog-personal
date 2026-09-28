@@ -5,7 +5,7 @@ import { CopyCode } from "@/components/copy-code";
 import { PostCard } from "@/components/post-card";
 import { ShareButtons } from "@/components/share-buttons";
 import { SkyScene } from "@/components/sky-scene";
-import { assertLocale, localePath, type Locale } from "@/i18n/config";
+import { assertLocale, localePath } from "@/i18n/config";
 import { formatDate } from "@/lib/format";
 import { getAllPosts, getPost, getPostNeighbors } from "@/lib/posts";
 import { site } from "@/lib/site";

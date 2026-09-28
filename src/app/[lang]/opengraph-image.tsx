@@ -1,4 +1,4 @@
-import { assertLocale, type Locale } from "@/i18n/config";
+import { assertLocale } from "@/i18n/config";
 import { renderOgImage, ogSize } from "@/lib/og";
 import { getSite, site } from "@/lib/site";
 

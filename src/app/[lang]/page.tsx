@@ -8,7 +8,7 @@ import { SkyScene } from "@/components/sky-scene";
 import { TerminalCard } from "@/components/terminal-card";
 import { getAllPosts } from "@/lib/posts";
 import { getAllProjects } from "@/lib/projects";
-import { assertLocale, localePath, type Locale } from "@/i18n/config";
+import { assertLocale, localePath } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getSite } from "@/lib/site";
 
