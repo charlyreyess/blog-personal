@@ -27,7 +27,7 @@ export default function NotFound() {
         <p className="mt-2 max-w-md font-medium text-sky-ink/75">{t.text}</p>
         <Link
           href={localePath(lang, "/")}
-          className="mt-8 inline-block rounded-md bg-accent px-6 py-3 font-medium text-on-accent shadow-lg shadow-accent/25 transition-transform hover:-translate-y-0.5"
+          className="mt-8 inline-block rounded-md bg-gradient-to-r from-[#0251fe] to-violet-600 text-white px-6 py-3 font-semibold shadow-lg shadow-violet-500/25 transition-transform hover:-translate-y-0.5"
         >
           {t.back}
         </Link>

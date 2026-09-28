@@ -11,6 +11,7 @@ import { getAllPosts } from "@/lib/posts";
 import { getAllProjects } from "@/lib/projects";
 import { assertLocale, localePath } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { brandGradientButton, brandGradientText, tones, type Tone } from "@/lib/palette";
 import { getSite } from "@/lib/site";
 
 const icons = {
@@ -44,11 +45,11 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const allProjects = getAllProjects(lang);
   const featured = allProjects.filter((project) => project.featured);
   const projects = (featured.length > 0 ? featured : allProjects).slice(0, 4);
-  const stats = [
-    { value: allProjects.length, label: t.stats.projects },
-    { value: site.skills.length, label: t.stats.tech },
-    { value: 3, label: t.stats.platforms },
-    { value: "E2E", label: t.stats.e2e },
+  const stats: { value: string | number; label: string; tone: Tone }[] = [
+    { value: allProjects.length, label: t.stats.projects, tone: "blue" },
+    { value: site.skills.length, label: t.stats.tech, tone: "cyan" },
+    { value: 3, label: t.stats.platforms, tone: "violet" },
+    { value: "E2E", label: t.stats.e2e, tone: "emerald" },
   ];
 
   return (
@@ -59,14 +60,23 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pt-16 pb-20 sm:px-6 sm:pt-24 lg:grid-cols-[1fr_26rem] lg:pt-28 lg:pb-28">
           <div>
           <h1 className="max-w-2xl text-4xl leading-[1.1] font-bold tracking-tight text-balance text-sky-ink sm:text-5xl lg:text-6xl">
-            {site.headline}
-            <span aria-hidden className="animate-blink ml-1 font-light text-accent">_</span>
+            {(() => {
+              const [antes, despues] = site.headline.split(site.headlineAccent);
+              return (
+                <>
+                  {antes}
+                  <span className={brandGradientText}>{site.headlineAccent}</span>
+                  {despues}
+                </>
+              );
+            })()}
+            <span aria-hidden className="animate-blink ml-1 font-light text-violet-600">_</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed font-medium text-pretty text-sky-ink/80">{site.intro}</p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <Link
               href={localePath(lang, "/proyectos")}
-              className="rounded-md bg-accent px-6 py-3.5 font-semibold text-on-accent shadow-lg shadow-accent/25 transition-transform hover:-translate-y-0.5"
+              className={`rounded-md ${brandGradientButton} px-6 py-3.5 font-semibold text-white shadow-lg shadow-violet-500/25 transition-transform hover:-translate-y-0.5`}
             >
               {t.seeProjects}
             </Link>
@@ -121,9 +131,13 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         <section aria-label={t.statsLabel} className="pt-14">
           <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col-reverse rounded-lg border border-line bg-surface p-5 shadow-card">
+              <div
+                key={stat.label}
+                className="relative flex flex-col-reverse overflow-hidden rounded-lg border border-line bg-surface p-5 shadow-card"
+              >
+                <span aria-hidden className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${tones[stat.tone].bar}`} />
                 <dt className="mt-1 text-sm text-muted">{stat.label}</dt>
-                <dd className="font-mono text-3xl font-bold text-accent">{stat.value}</dd>
+                <dd className={`font-mono text-3xl font-bold ${tones[stat.tone].text}`}>{stat.value}</dd>
               </div>
             ))}
           </dl>
@@ -163,9 +177,12 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             {site.services.map((service) => (
               <li
                 key={service.title}
-                className="reveal group rounded-lg border border-line bg-surface p-7 shadow-card transition-colors hover:border-accent/40"
+                className={`reveal group relative overflow-hidden rounded-lg border border-line bg-surface p-7 shadow-card transition-colors ${tones[service.tone].hoverBorder}`}
               >
-                <span className="grid size-12 place-items-center rounded-lg bg-accent-soft text-accent transition-colors group-hover:bg-accent group-hover:text-on-accent">
+                <span aria-hidden className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${tones[service.tone].bar}`} />
+                <span
+                  className={`grid size-12 place-items-center rounded-lg ${tones[service.tone].soft} ${tones[service.tone].text} transition-colors ${tones[service.tone].iconHover}`}
+                >
                   <svg
                     aria-hidden
                     viewBox="0 0 24 24"
@@ -183,7 +200,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
                 <p className="mt-2 text-sm leading-relaxed text-muted">{service.description}</p>
                 <ul className="mt-4 flex flex-wrap gap-1.5 font-mono text-xs">
                   {service.tags.map((tag) => (
-                    <li key={tag} className="rounded bg-paper px-2 py-1 text-heading ring-1 ring-line">
+                    <li key={tag} className={`rounded px-2 py-1 ring-1 ${tones[service.tone].soft} ${tones[service.tone].text} ${tones[service.tone].ring}`}>
                       {tag}
                     </li>
                   ))}
@@ -205,11 +222,17 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             description={t.architecture.description}
           />
           <ol className="relative grid gap-4 md:grid-cols-4">
-            <div aria-hidden className="absolute top-9 right-[12%] left-[12%] hidden h-px border-t-2 border-dashed border-accent/30 md:block" />
+            <div aria-hidden className="absolute top-9 right-[12%] left-[12%] hidden h-0.5 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 via-60% to-emerald-400 opacity-40 md:block" />
             {site.layers.map((layer, index) => (
-              <li key={layer.name} className="reveal relative rounded-lg border border-line bg-surface p-5 shadow-card">
+              <li
+                key={layer.name}
+                className={`reveal relative overflow-hidden rounded-lg border border-line bg-surface p-5 shadow-card transition-colors ${tones[layer.tone].hoverBorder}`}
+              >
+                <span aria-hidden className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${tones[layer.tone].bar}`} />
                 <div className="flex items-center gap-3">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-md bg-accent font-mono text-sm font-bold text-on-accent">
+                  <span
+                    className={`grid size-9 shrink-0 place-items-center rounded-md bg-gradient-to-br ${tones[layer.tone].bar} font-mono text-sm font-bold text-white shadow-sm`}
+                  >
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <div>
@@ -220,7 +243,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
                 <ul className="mt-4 space-y-1.5 font-mono text-sm text-heading">
                   {layer.tech.map((tech) => (
                     <li key={tech} className="flex items-center gap-2">
-                      <span aria-hidden className="text-accent">▸</span>
+                      <span aria-hidden className={tones[layer.tone].text}>▸</span>
                       {tech}
                     </li>
                   ))}
@@ -241,12 +264,17 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             description={t.process.description}
           />
           <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {site.process.map((step, index) => (
-              <li key={step.title} className="reveal relative rounded-lg bg-surface p-6 shadow-card">
+            {site.process.map((step, index) => {
+              const tone = (["cyan", "blue", "violet", "emerald"] as const)[index % 4];
+              const stroke = { cyan: "#0891b2", blue: "#0251fe", violet: "#7c3aed", emerald: "#059669" }[tone];
+              return (
+              <li key={step.title} className="reveal relative overflow-hidden rounded-lg bg-surface p-6 shadow-card">
+                <span aria-hidden className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${tones[tone].bar}`} />
                 <span
                   aria-hidden
                   data-text={String(index + 1).padStart(2, "0")}
                   className="outline-accent block text-5xl before:content-[attr(data-text)]"
+                  style={{ WebkitTextStroke: `2px ${stroke}` }}
                 />
                 <h3 className="mt-4 text-lg font-semibold text-heading">
                   <span className="sr-only">{t.process.step} {index + 1}: </span>
@@ -254,7 +282,8 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{step.description}</p>
               </li>
-            ))}
+              );
+            })}
           </ol>
         </section>
 

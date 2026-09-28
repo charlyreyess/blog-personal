@@ -115,7 +115,7 @@ export function ContactForm({ lang }: { lang: Locale }) {
         <button
           type="submit"
           disabled={status.kind === "loading"}
-          className="rounded-md bg-accent px-7 py-3.5 font-semibold text-on-accent shadow-lg shadow-accent/25 transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="rounded-md bg-gradient-to-r from-[#0251fe] to-violet-600 text-white px-7 py-3.5 font-semibold shadow-lg shadow-violet-500/25 transition-transform hover:-translate-y-0.5 disabled:opacity-60"
         >
           {status.kind === "loading" ? t.sending : t.submit}
         </button>

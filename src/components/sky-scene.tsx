@@ -4,15 +4,28 @@ export function SkyScene({ variant = "hero" }: { variant?: "hero" | "band" }) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       <div className="bg-blueprint absolute inset-0" />
-      {/* Brillo suave: solo un degradado radial (sin filtros de desenfoque, que son costosos de pintar) */}
+      {/* Brillos de marca (azul, violeta y cian): degradados radiales, sin filtros de desenfoque costosos */}
       <div
         className="absolute inset-0"
-        style={{ background: "radial-gradient(40rem 26rem at 85% 0%, var(--glow), transparent 70%)" }}
+        style={{
+          background: [
+            "radial-gradient(40rem 26rem at 85% 0%, rgba(2, 81, 254, 0.20), transparent 70%)",
+            "radial-gradient(34rem 24rem at 0% 100%, rgba(124, 58, 237, 0.14), transparent 70%)",
+            "radial-gradient(28rem 20rem at 55% 110%, rgba(6, 182, 212, 0.14), transparent 70%)",
+          ].join(", "),
+        }}
       />
       {variant === "hero" && (
         <svg viewBox="0 0 600 400" className="absolute right-0 bottom-0 hidden h-[70%] w-auto opacity-70 lg:block">
           {/* Red de nodos: servicios conectados */}
-          <g stroke="var(--accent)" strokeOpacity="0.25" strokeWidth="1.5" strokeDasharray="4 6" fill="none">
+          <defs>
+            <linearGradient id="red" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stopColor="#06b6d4" />
+              <stop offset="0.5" stopColor="#0251fe" />
+              <stop offset="1" stopColor="#7c3aed" />
+            </linearGradient>
+          </defs>
+          <g stroke="url(#red)" strokeOpacity="0.5" strokeWidth="1.5" strokeDasharray="4 6" fill="none">
             <path d="M120 320 L260 250 L420 300 L540 200" />
             <path d="M260 250 L300 130 L460 90" />
             <path d="M420 300 L460 90" />

@@ -15,11 +15,12 @@ export function Footer({ lang, showBlog = true }: { lang: Locale; showBlog?: boo
   ].filter((page) => showBlog || page.href !== "/blog");
 
   return (
-    <footer className="mt-24 border-t border-line bg-surface">
+    <footer className="relative mt-24 border-t border-line bg-surface">
+      <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-400 via-[#0251fe] to-violet-500 opacity-60" />
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 text-sm sm:grid-cols-[1.5fr_1fr_1fr] sm:px-6">
         <div>
           <Link href={localePath(lang, "/")} className="inline-flex items-center gap-2.5">
-            <span className="grid size-9 place-items-center rounded-lg bg-accent text-sm font-semibold text-on-accent">
+            <span className="grid size-9 place-items-center rounded-lg bg-gradient-to-br from-[#0251fe] to-violet-600 text-sm font-semibold text-white">
               {site.initials}
             </span>
             <span className="font-semibold text-heading">{site.name}</span>

@@ -13,7 +13,7 @@ function LanguageSwitch({ lang, path, label, title }: { lang: Locale; path: stri
     <div role="group" aria-label={label} className="flex items-center rounded-md border border-line p-0.5 font-mono text-xs font-semibold">
       {(["es", "en"] as const).map((l) =>
         l === lang ? (
-          <span key={l} aria-current="true" className="rounded bg-accent px-2 py-1 text-on-accent uppercase">
+          <span key={l} aria-current="true" className="rounded bg-gradient-to-r from-[#0251fe] to-violet-600 px-2 py-1 text-white uppercase">
             {l}
           </span>
         ) : (
@@ -57,11 +57,12 @@ export function Header({ lang, showBlog = true }: { lang: Locale; showBlog?: boo
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/90 shadow-card backdrop-blur-md">
+      <span aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-cyan-400 via-[#0251fe] to-violet-500 opacity-60" />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href={localePath(lang, "/")} className="group flex items-center gap-2.5" onClick={() => setOpen(false)}>
           <span
             aria-hidden
-            className="grid size-9 place-items-center rounded-lg bg-accent text-sm font-semibold text-on-accent transition-transform group-hover:-rotate-6"
+            className="grid size-9 place-items-center rounded-lg bg-gradient-to-br from-[#0251fe] to-violet-600 text-sm font-semibold text-white shadow-md shadow-violet-500/20 transition-transform group-hover:-rotate-6"
           >
             {site.initials}
           </span>
@@ -92,7 +93,7 @@ export function Header({ lang, showBlog = true }: { lang: Locale; showBlog?: boo
           <LanguageSwitch lang={lang} path={path} label={t.language} title={t.switchTo} />
           <Link
             href={localePath(lang, "/contacto")}
-            className="hidden rounded-md bg-accent px-4 py-2 text-sm font-medium text-on-accent transition-opacity hover:opacity-90 md:inline-block"
+            className="hidden rounded-md bg-gradient-to-r from-[#0251fe] to-violet-600 text-white px-4 py-2 text-sm font-semibold shadow-md shadow-violet-500/20 transition-transform hover:-translate-y-0.5 md:inline-block"
           >
             {t.contactCta}
           </Link>
