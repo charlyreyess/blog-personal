@@ -9,7 +9,7 @@ image: "/proyectos/asistesalas.webp"
 imageFit: "contain"
 imageBg: "#efefef"
 featured: true
-order: 4
+order: 99
 ---
 
 ## El reto

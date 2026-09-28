@@ -66,10 +66,10 @@ export function getAllProjects(): ProjectMeta[] {
     .map((file) => readProjectFile(file.replace(/\.md$/, "")))
     .filter((project) => !project.draft)
     .map((project) => project.meta)
-    // Primero los que tienen "order" (1, 2, 3…), luego los destacados y después por fecha.
+    // "order" fija la posición (sin order = 50, en medio); a igual posición, destacados y luego por fecha.
     .sort(
       (a, b) =>
-        (a.order ?? Infinity) - (b.order ?? Infinity) ||
+        (a.order ?? 50) - (b.order ?? 50) ||
         Number(b.featured) - Number(a.featured) ||
         b.date.localeCompare(a.date),
     );

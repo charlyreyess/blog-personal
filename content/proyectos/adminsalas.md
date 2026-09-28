@@ -7,7 +7,7 @@ client: "Universidad del Mar"
 stack: ["Java", "Swing", "MySQL", "LaTeX", "Inno Setup"]
 image: "/proyectos/adminsalas-inicio-sesion.webp"
 featured: true
-order: 3
+order: 98
 ---
 
 ## El reto
