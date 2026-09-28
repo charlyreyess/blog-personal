@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Poppins } from "next/font/google";
-import { notFound } from "next/navigation";
 import { BackToTop } from "@/components/back-to-top";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
@@ -38,10 +37,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 export const viewport: Viewport = { themeColor: "#ffffff", colorScheme: "light" };
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
-  const raw = (await params).lang;
-  // Un segmento que no es idioma (p. ej. /rss.xml) → 404 global. Sin parámetro (404 interna de Next) → español.
-  if (raw !== undefined && !hasLocale(raw)) notFound();
-  const lang = resolveLang(raw);
+  // Si el segmento no es un idioma (p. ej. /rss.xml), la página muestra la 404; el layout usa el español.
+  const lang = resolveLang((await params).lang);
   const t = getDictionary(lang);
   const showBlog = getAllPosts().length > 0;
 
