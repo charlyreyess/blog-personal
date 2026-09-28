@@ -18,7 +18,7 @@ export function CodeFloat({
   return (
     <span
       aria-hidden
-      className="pointer-events-none absolute hidden rounded-md border border-accent/10 bg-surface/70 px-2.5 py-1.5 font-mono text-[11px] whitespace-nowrap text-accent/60 shadow-sm select-none xl:block"
+      className="pointer-events-none absolute hidden rounded-md border border-accent/10 bg-surface/70 px-2.5 py-1.5 font-mono text-[11px] whitespace-nowrap text-accent/60 shadow-sm select-none 2xl:block"
       // Se coloca justo fuera del contenido (72rem): a la izquierda crece hacia el margen izquierdo y viceversa.
       style={{
         top,
