@@ -51,3 +51,13 @@ draft: false
 5. *(Opcional)* Dominio propio en **Settings → Domains**.
 
 > Seguridad: la *service role key* de Supabase no se usa en este proyecto y nunca debe llevar el prefijo `NEXT_PUBLIC_`.
+
+## Correos
+
+Los correos (mensaje de contacto, aviso de nuevo suscriptor y newsletter) usan el diseño de `src/lib/email-template.ts`: cabecera de cielo, tarjeta blanca y azul `#0251fe`.
+
+- **Newsletter:** copia el HTML de `emails/newsletter.html` en Resend → *Broadcasts* → *Create* (editor HTML) y cambia el título, el texto, el enlace y la imagen del artículo. Resend sustituye `{{{RESEND_UNSUBSCRIBE_URL}}}` por el enlace de baja.
+- **Regenerar la plantilla** tras cambiar el diseño:
+  ```bash
+  NEXT_PUBLIC_SITE_URL=https://blog-personal-snowy.vercel.app npx tsx scripts/generar-correos.mts
+  ```
