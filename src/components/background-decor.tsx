@@ -82,7 +82,7 @@ export function SectionDivider({ label }: { label: string }) {
     <div aria-hidden className="relative mt-20 flex items-center gap-3 sm:mt-24">
       <span className="h-px flex-1 bg-gradient-to-r from-transparent via-accent/25 to-accent/25" />
       <span className="size-2 rounded-full border border-accent/40 bg-surface" />
-      <span className="rounded-full border border-accent/15 bg-surface px-3 py-1 font-mono text-[11px] text-accent/70">{label}</span>
+      <span className="rounded-full border border-accent/15 bg-surface px-3 py-1 font-mono text-[11px] text-accent">{label}</span>
       <span className="size-2 rounded-full border border-accent/40 bg-surface" />
       <span className="h-px flex-1 bg-gradient-to-l from-transparent via-accent/25 to-accent/25" />
     </div>
