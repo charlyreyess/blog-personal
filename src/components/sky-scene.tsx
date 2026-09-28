@@ -4,9 +4,10 @@ export function SkyScene({ variant = "hero" }: { variant?: "hero" | "band" }) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       <div className="bg-blueprint absolute inset-0" />
+      {/* Brillo suave: solo un degradado radial (sin filtros de desenfoque, que son costosos de pintar) */}
       <div
-        className="absolute -top-40 right-[-10%] size-[42rem] rounded-full blur-3xl"
-        style={{ background: "radial-gradient(circle, var(--glow), transparent 65%)" }}
+        className="absolute inset-0"
+        style={{ background: "radial-gradient(40rem 26rem at 85% 0%, var(--glow), transparent 70%)" }}
       />
       {variant === "hero" && (
         <svg viewBox="0 0 600 400" className="absolute right-0 bottom-0 hidden h-[70%] w-auto opacity-70 lg:block">
