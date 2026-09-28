@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 // Idiomas del sitio. El español es el idioma por defecto y vive en la raíz (/proyectos);
 // el inglés lleva prefijo (/en/proyectos). El proxy (src/proxy.ts) reescribe las rutas sin prefijo a /es.
 export const locales = ["es", "en"] as const;
@@ -25,3 +27,9 @@ export function stripLocale(pathname: string) {
 export const htmlLang: Record<Locale, string> = { es: "es-MX", en: "en" };
 export const ogLocale: Record<Locale, string> = { es: "es_MX", en: "en_US" };
 export const dateLocale: Record<Locale, string> = { es: "es-MX", en: "en-US" };
+
+// Valida el idioma de la URL en páginas y rutas: si no es un idioma (p. ej. "rss.xml"), muestra la 404.
+export function assertLocale(value: string | undefined): Locale {
+  if (!value || !hasLocale(value)) notFound();
+  return value;
+}

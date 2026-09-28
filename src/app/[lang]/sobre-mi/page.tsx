@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { getBio } from "@/lib/bio";
-import { localePath, type Locale } from "@/i18n/config";
+import { assertLocale, localePath, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getSite, socialLinks } from "@/lib/site";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/sobre-mi">): Promise<Metadata> {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const t = getDictionary(lang).about;
   return { title: t.title, description: t.metaDescription, alternates: alternates(lang, "/sobre-mi") };
 }
 
 export default async function AboutPage({ params }: PageProps<"/[lang]/sobre-mi">) {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const site = getSite(lang);
   const t = getDictionary(lang).about;
   const bio = await getBio(lang);

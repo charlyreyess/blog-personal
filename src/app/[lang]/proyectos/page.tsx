@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { ProjectCard } from "@/components/project-card";
-import type { Locale } from "@/i18n/config";
+import { assertLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getAllProjects } from "@/lib/projects";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/proyectos">): Promise<Metadata> {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const t = getDictionary(lang).projects;
   return { title: t.heroTitle, description: t.metaDescription, alternates: alternates(lang, "/proyectos") };
 }
 
 export default async function ProjectsPage({ params }: PageProps<"/[lang]/proyectos">) {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const t = getDictionary(lang).projects;
   const projects = getAllProjects(lang);
 

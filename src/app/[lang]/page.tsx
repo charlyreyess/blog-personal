@@ -8,7 +8,7 @@ import { SkyScene } from "@/components/sky-scene";
 import { TerminalCard } from "@/components/terminal-card";
 import { getAllPosts } from "@/lib/posts";
 import { getAllProjects } from "@/lib/projects";
-import { localePath, type Locale } from "@/i18n/config";
+import { assertLocale, localePath, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getSite } from "@/lib/site";
 
@@ -36,7 +36,7 @@ const icons = {
 };
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const site = getSite(lang);
   const t = getDictionary(lang).home;
   const posts = getAllPosts().slice(0, 3);

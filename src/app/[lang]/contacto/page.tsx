@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
 import { PageHero } from "@/components/page-hero";
-import type { Locale } from "@/i18n/config";
+import { assertLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getSite, socialLinks } from "@/lib/site";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/contacto">): Promise<Metadata> {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const t = getDictionary(lang).contact;
   return { title: t.eyebrow, description: t.metaDescription, alternates: alternates(lang, "/contacto") };
 }
 
 export default async function ContactPage({ params }: PageProps<"/[lang]/contacto">) {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const site = getSite(lang);
   const t = getDictionary(lang).contact;
 

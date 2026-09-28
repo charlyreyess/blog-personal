@@ -3,19 +3,19 @@ import { Suspense } from "react";
 import { BlogExplorer } from "@/components/blog-explorer";
 import { PageHero } from "@/components/page-hero";
 import { PostCard } from "@/components/post-card";
-import type { Locale } from "@/i18n/config";
+import { assertLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternates } from "@/i18n/metadata";
 import { getAllPosts, getAllTags } from "@/lib/posts";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/blog">): Promise<Metadata> {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const t = getDictionary(lang).blog;
   return { title: t.title, description: t.text, alternates: alternates(lang, "/blog") };
 }
 
 export default async function BlogPage({ params }: PageProps<"/[lang]/blog">) {
-  const lang = (await params).lang as Locale;
+  const lang = assertLocale((await params).lang);
   const t = getDictionary(lang).blog;
   const posts = getAllPosts();
   const tags = getAllTags();

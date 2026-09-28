@@ -5,7 +5,7 @@ import { CopyCode } from "@/components/copy-code";
 import { PostCard } from "@/components/post-card";
 import { ShareButtons } from "@/components/share-buttons";
 import { SkyScene } from "@/components/sky-scene";
-import { localePath, type Locale } from "@/i18n/config";
+import { assertLocale, localePath, type Locale } from "@/i18n/config";
 import { formatDate } from "@/lib/format";
 import { getAllPosts, getPost, getPostNeighbors } from "@/lib/posts";
 import { site } from "@/lib/site";
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
 
 export default async function PostPage({ params }: PageProps<"/[lang]/blog/[slug]">) {
   const { lang: l, slug } = await params;
-  const lang = l as Locale;
+  const lang = assertLocale(l);
   const post = await getPost(slug);
   if (!post) notFound();
   const { newer, older, related } = getPostNeighbors(post.slug);
