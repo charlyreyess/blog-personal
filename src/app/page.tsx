@@ -66,11 +66,7 @@ export default function HomePage() {
         <SkyScene />
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pt-16 pb-20 sm:px-6 sm:pt-24 lg:grid-cols-[1fr_26rem] lg:pt-28 lg:pb-28">
           <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-surface/80 px-3.5 py-1.5 font-mono text-xs font-medium text-heading shadow-card backdrop-blur sm:text-sm">
-            <span aria-hidden className="size-2 rounded-full bg-[#22c55e] ring-4 ring-[#22c55e]/20" />
-            {site.heroLabel}
-          </p>
-          <h1 className="mt-6 max-w-2xl text-4xl leading-[1.1] font-bold tracking-tight text-balance text-sky-ink sm:text-5xl lg:text-6xl">
+          <h1 className="max-w-2xl text-4xl leading-[1.1] font-bold tracking-tight text-balance text-sky-ink sm:text-5xl lg:text-6xl">
             {site.headline}
             <span aria-hidden className="animate-blink ml-1 font-light text-accent">_</span>
           </h1>

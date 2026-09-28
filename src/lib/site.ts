@@ -10,8 +10,7 @@ export const site = {
   locale: "es_MX",
 
   // Portada
-  heroLabel: "Software a la medida · Web · Móvil · Escritorio · IA",
-  headline: "Construyo software de punta a punta: del frontend a la base de datos.",
+  headline: "Convierto ideas en software que funciona.",
   intro:
     "Soy desarrollador Full Stack: diseño interfaces web y móviles, construyo APIs y automatizo procesos, con código limpio y un rendimiento que se nota.",
   // Descripción corta para buscadores, pie de página y tarjetas al compartir
