@@ -22,6 +22,8 @@ export type ProjectMeta = {
   client?: string;
   stack: string[];
   image?: string;
+  imageFit: "cover" | "contain";
+  imageBg?: string;
   logo?: string;
   url?: string;
   repo?: string;
@@ -45,6 +47,8 @@ function readProjectFile(slug: string) {
     client: optional(data.client),
     stack: Array.isArray(data.stack) ? data.stack.map(String) : [],
     image: optional(data.image),
+    imageFit: data.imageFit === "contain" ? "contain" : "cover",
+    imageBg: optional(data.imageBg),
     logo: findLogo(slug, optional(data.logo)),
     url: optional(data.url),
     repo: optional(data.repo),

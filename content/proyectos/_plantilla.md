@@ -9,6 +9,8 @@ role: "Desarrollo front-end"  # opcional: tu papel en el proyecto
 client: "Nombre del cliente"  # opcional
 stack: ["React", "Node.js"]
 image: "/proyectos/tienda-online.png"  # opcional: si no hay, se genera una portada
+# imageFit: "contain"                   # opcional: muestra la captura completa, sin recortar
+# imageBg: "#ffffff"                    # opcional: color de fondo alrededor si se usa "contain"
 # logo: se toma solo de public/proyectos/logos/<nombre-del-archivo>.svg|png (ej. tienda-online.png)
 url: "https://ejemplo.com"             # opcional: demo o web en producción
 repo: "https://github.com/usuario/repo" # opcional: código fuente

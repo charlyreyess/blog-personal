@@ -5,8 +5,9 @@ date: "2026-09-22"
 role: "Evolución a la versión 2.0"
 client: "Universidad del Mar"
 stack: ["Java", "Swing", "MySQL", "LaTeX", "Inno Setup"]
-image: "/proyectos/adminsalas.webp"
-featured: false
+image: "/proyectos/adminsalas-inicio-sesion.webp"
+featured: true
+order: 3
 ---
 
 ## El reto
@@ -24,6 +25,8 @@ Evolucioné el sistema a **AdminSalas 2.0**, con un nuevo menú principal y mód
 - Importación de alumnos, control de impresiones e impresoras, carreras, grupos y cambio de semestre.
 
 ![Menú de Consultas de AdminSalas](/proyectos/adminsalas-menu-consultas.webp)
+
+![Ventana de consulta de accesos de alumnos](/proyectos/adminsalas-consulta-accesos.webp)
 
 ## Resultado
 

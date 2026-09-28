@@ -6,7 +6,10 @@ role: "Mantenimiento, rediseño y nuevas funciones"
 client: "Universidad del Mar"
 stack: ["Java", "Swing", "MySQL", "JNA"]
 image: "/proyectos/asistesalas.webp"
+imageFit: "contain"
+imageBg: "#efefef"
 featured: true
+order: 4
 ---
 
 ## El reto
