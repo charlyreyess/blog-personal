@@ -19,7 +19,7 @@ export function BackToTop({ label }: { label: string }) {
       aria-label={label}
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
-      className={`fixed right-4 bottom-4 z-40 grid size-11 place-items-center rounded-full bg-accent text-on-accent shadow-lg shadow-accent/30 transition-all sm:right-6 sm:bottom-6 ${
+      className={`fixed right-4 bottom-4 z-40 grid size-11 place-items-center rounded-full bg-gradient-to-br from-[#0251fe] to-violet-600 text-white shadow-lg shadow-violet-500/30 transition-all sm:right-6 sm:bottom-6 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >
