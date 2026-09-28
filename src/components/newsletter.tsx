@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 type Status = { kind: "idle" | "loading" | "ok" | "error"; message?: string };
 
-export function Newsletter() {
+export function Newsletter({ lang }: { lang: Locale }) {
+  const t = getDictionary(lang).newsletter;
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -16,27 +19,27 @@ export function Newsletter() {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: data.get("email"), website: data.get("website") }),
+        body: JSON.stringify({ email: data.get("email"), website: data.get("website"), lang }),
       });
       const result = (await res.json()) as { message: string };
       setStatus({ kind: res.ok ? "ok" : "error", message: result.message });
       if (res.ok) form.reset();
     } catch {
-      setStatus({ kind: "error", message: "No se pudo conectar. Inténtalo de nuevo." });
+      setStatus({ kind: "error", message: t.offline });
     }
   }
 
   return (
     <section id="newsletter" className="relative scroll-mt-24 overflow-hidden rounded-lg bg-accent p-7 text-on-accent shadow-card sm:p-12">
-      <h2 className="text-2xl font-bold sm:text-3xl">Recibe novedades</h2>
+      <h2 className="text-2xl font-bold sm:text-3xl">{t.title}</h2>
       <p className="mt-2 max-w-prose opacity-90">
-        Un correo cuando publique un proyecto o artículo nuevo. Sin spam y con baja en un clic.
+        {t.text}
       </p>
       <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row">
         {/* Campo trampa para bots: las personas no lo ven ni lo rellenan */}
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
         <label htmlFor="newsletter-email" className="sr-only">
-          Tu email
+          {t.label}
         </label>
         <input
           id="newsletter-email"
@@ -44,7 +47,7 @@ export function Newsletter() {
           type="email"
           required
           autoComplete="email"
-          placeholder="tu@email.com"
+          placeholder={t.placeholder}
           className="h-12 flex-1 rounded-md border-2 border-transparent bg-white px-5 text-[#282a3c] placeholder:text-[#595d6e] focus:border-[#86daf0] focus:outline-none"
         />
         <button
@@ -52,7 +55,7 @@ export function Newsletter() {
           disabled={status.kind === "loading"}
           className="h-12 rounded-md bg-[#282a3c] px-6 font-medium text-white transition-colors hover:bg-black disabled:opacity-60"
         >
-          {status.kind === "loading" ? "Enviando…" : "Suscribirme"}
+          {status.kind === "loading" ? t.sending : t.submit}
         </button>
       </form>
       <p

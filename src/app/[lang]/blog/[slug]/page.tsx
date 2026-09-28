@@ -5,17 +5,18 @@ import { CopyCode } from "@/components/copy-code";
 import { PostCard } from "@/components/post-card";
 import { ShareButtons } from "@/components/share-buttons";
 import { SkyScene } from "@/components/sky-scene";
+import { localePath, type Locale } from "@/i18n/config";
 import { formatDate } from "@/lib/format";
 import { getAllPosts, getPost, getPostNeighbors } from "@/lib/posts";
 import { site } from "@/lib/site";
 
 export const dynamicParams = false;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug]">): Promise<Metadata> {
   const post = await getPost((await params).slug);
   if (!post) return {};
   return {
@@ -33,8 +34,10 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): P
   };
 }
 
-export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
-  const post = await getPost((await params).slug);
+export default async function PostPage({ params }: PageProps<"/[lang]/blog/[slug]">) {
+  const { lang: l, slug } = await params;
+  const lang = l as Locale;
+  const post = await getPost(slug);
   if (!post) notFound();
   const { newer, older, related } = getPostNeighbors(post.slug);
   const postUrl = `${site.url}/blog/${post.slug}`;
@@ -58,7 +61,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
       <header className="relative isolate overflow-hidden bg-sky">
         <SkyScene variant="band" />
         <div className="relative mx-auto max-w-3xl px-4 pt-10 pb-24 sm:px-6 sm:pt-14 sm:pb-28">
-          <Link href="/blog" className="text-sm font-medium text-sky-ink/80 hover:text-sky-ink">
+          <Link href={localePath(lang, "/blog")} className="text-sm font-medium text-sky-ink/80 hover:text-sky-ink">
             ← Volver al blog
           </Link>
           <p className="mt-6 flex flex-wrap gap-2 text-xs font-medium">
@@ -74,7 +77,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
           </p>
           <h1 className="mt-4 text-3xl leading-tight font-bold text-balance text-sky-ink sm:text-5xl">{post.title}</h1>
           <p className="mt-5 text-sm font-medium text-sky-ink/80">
-            {site.name} · <time dateTime={post.date}>{formatDate(post.date)}</time> · {post.readingTime} min de
+            {site.name} · <time dateTime={post.date}>{formatDate(post.date, lang)}</time> · {post.readingTime} min de
             lectura
           </p>
         </div>
@@ -110,10 +113,10 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
         <footer className="mt-8 rounded-lg border-l-4 border-accent bg-surface p-6 shadow-card">
           <p className="font-semibold text-heading">¿Te ha resultado útil?</p>
           <p className="mt-1 text-sm text-muted">
-            <Link href="/contacto" className="text-accent underline underline-offset-2">
+            <Link href={localePath(lang, "/contacto")} className="text-accent underline underline-offset-2">
               Escríbeme
             </Link>{" "}
-            o <Link href="/#newsletter" className="text-accent underline underline-offset-2">suscríbete</Link> para
+            o <Link href={`${localePath(lang, "/")}#newsletter`} className="text-accent underline underline-offset-2">suscríbete</Link> para
             recibir el próximo artículo.
           </p>
         </footer>
@@ -151,7 +154,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">
             {related.map((item) => (
-              <PostCard key={item.slug} post={item} />
+              <PostCard key={item.slug} post={item} lang={lang} />
             ))}
           </div>
         </section>

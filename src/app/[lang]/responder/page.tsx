@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function ResponderPage({ searchParams }: PageProps<"/responder">) {
+export default async function ResponderPage({ searchParams }: PageProps<"/[lang]/responder">) {
   const { t } = await searchParams;
   const token = typeof t === "string" ? t : null;
   const datos = verifyReplyToken(token);

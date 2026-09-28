@@ -1,24 +1,34 @@
 import type { MetadataRoute } from "next";
+import { localePath, locales } from "@/i18n/config";
 import { getAllPosts } from "@/lib/posts";
 import { getAllProjects } from "@/lib/projects";
 import { site } from "@/lib/site";
 
+// Cada página aparece en español e inglés, enlazadas entre sí (hreflang).
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    { url: site.url, changeFrequency: "weekly", priority: 1 },
-    { url: `${site.url}/blog`, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${site.url}/proyectos`, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${site.url}/sobre-mi`, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${site.url}/contacto`, changeFrequency: "yearly", priority: 0.6 },
-    ...getAllPosts().map((post) => ({
-      url: `${site.url}/blog/${post.slug}`,
-      lastModified: post.date,
-      priority: 0.7,
-    })),
-    ...getAllProjects().map((project) => ({
-      url: `${site.url}/proyectos/${project.slug}`,
-      lastModified: project.date,
-      priority: 0.6,
-    })),
+  const url = site.url.replace(/\/$/, "");
+  const pages: { path: string; priority: number; changeFrequency: "weekly" | "monthly" | "yearly"; lastModified?: string }[] = [
+    { path: "/", priority: 1, changeFrequency: "weekly" },
+    { path: "/proyectos", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/sobre-mi", priority: 0.5, changeFrequency: "monthly" },
+    { path: "/contacto", priority: 0.6, changeFrequency: "yearly" },
+    ...(getAllPosts().length > 0 ? [{ path: "/blog", priority: 0.8, changeFrequency: "weekly" as const }] : []),
+    ...getAllPosts().map((post) => ({ path: `/blog/${post.slug}`, priority: 0.7, changeFrequency: "monthly" as const, lastModified: post.date })),
+    ...getAllProjects().map((p) => ({ path: `/proyectos/${p.slug}`, priority: 0.6, changeFrequency: "monthly" as const, lastModified: p.date })),
   ];
+
+  return pages.flatMap((page) =>
+    locales.map((lang) => ({
+      url: `${url}${localePath(lang, page.path)}`,
+      lastModified: page.lastModified,
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+      alternates: {
+        languages: {
+          "es-MX": `${url}${localePath("es", page.path)}`,
+          en: `${url}${localePath("en", page.path)}`,
+        },
+      },
+    })),
+  );
 }

@@ -8,7 +8,9 @@ import { SkyScene } from "@/components/sky-scene";
 import { TerminalCard } from "@/components/terminal-card";
 import { getAllPosts } from "@/lib/posts";
 import { getAllProjects } from "@/lib/projects";
-import { site } from "@/lib/site";
+import { localePath, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getSite } from "@/lib/site";
 
 const icons = {
   code: <path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14" />,
@@ -31,32 +33,21 @@ const icons = {
       <path d="M12 8V4M9 4h6M9 14h.01M15 14h.01M2 13v3M22 13v3" />
     </>
   ),
-  design: (
-    <>
-      <path d="M12 19l7-7 3 3-7 7-3-3z" />
-      <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-      <circle cx="11" cy="11" r="2" />
-    </>
-  ),
-  rocket: (
-    <>
-      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-      <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-    </>
-  ),
 };
 
-export default function HomePage() {
+export default async function HomePage({ params }: PageProps<"/[lang]">) {
+  const lang = (await params).lang as Locale;
+  const site = getSite(lang);
+  const t = getDictionary(lang).home;
   const posts = getAllPosts().slice(0, 3);
-  const allProjects = getAllProjects();
+  const allProjects = getAllProjects(lang);
   const featured = allProjects.filter((project) => project.featured);
   const projects = (featured.length > 0 ? featured : allProjects).slice(0, 4);
   const stats = [
-    { value: allProjects.length, label: "Proyectos en el portafolio" },
-    { value: site.skills.length, label: "Tecnologías en mi stack" },
-    { value: 3, label: "Plataformas: web, móvil y escritorio" },
-    { value: "E2E", label: "Del diseño al despliegue" },
+    { value: allProjects.length, label: t.stats.projects },
+    { value: site.skills.length, label: t.stats.tech },
+    { value: 3, label: t.stats.platforms },
+    { value: "E2E", label: t.stats.e2e },
   ];
 
   return (
@@ -73,26 +64,26 @@ export default function HomePage() {
           <p className="mt-6 max-w-xl text-lg leading-relaxed font-medium text-pretty text-sky-ink/80">{site.intro}</p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <Link
-              href="/proyectos"
+              href={localePath(lang, "/proyectos")}
               className="rounded-md bg-accent px-6 py-3.5 font-semibold text-on-accent shadow-lg shadow-accent/25 transition-transform hover:-translate-y-0.5"
             >
-              Ver proyectos
+              {t.seeProjects}
             </Link>
             <Link
-              href="/contacto"
+              href={localePath(lang, "/contacto")}
               className="rounded-md bg-surface px-6 py-3.5 font-semibold text-heading shadow-card transition-transform hover:-translate-y-0.5"
             >
-              Hablemos de tu proyecto
+              {t.talk}
             </Link>
             {site.cv && (
               <a href={site.cv} download className="px-2 py-3 font-semibold text-sky-ink underline-offset-4 hover:underline">
-                Descargar CV ↓
+                {t.downloadCv}
               </a>
             )}
           </div>
           </div>
           <div className="hidden lg:block">
-            <TerminalCard />
+            <TerminalCard lang={lang} />
           </div>
         </div>
       </section>
@@ -102,7 +93,7 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-7 sm:px-6 md:flex-row md:items-center md:gap-8">
           <h2 id="stack" className="shrink-0 font-mono text-xs font-semibold text-muted">
             <span aria-hidden className="text-accent">&gt;_ </span>
-            stack --tecnologías
+            {t.stackLabel}
           </h2>
           <ul className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm font-semibold text-heading">
             {site.skills.map((skill) => (
@@ -114,7 +105,7 @@ export default function HomePage() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Cifras */}
-        <section aria-label="En cifras" className="pt-14">
+        <section aria-label={t.statsLabel} className="pt-14">
           <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {stats.map((stat) => (
               <div key={stat.label} className="flex flex-col-reverse rounded-lg border border-line bg-surface p-5 shadow-card">
@@ -130,14 +121,14 @@ export default function HomePage() {
           <section aria-labelledby="proyectos" className="pt-20 sm:pt-24">
             <SectionHeading
               id="proyectos"
-              eyebrow="Portafolio"
-              title="Proyectos destacados"
-              description="Una selección de trabajos: el problema, la solución y el resultado."
-              link={{ href: "/proyectos", label: "Ver todos los proyectos" }}
+              eyebrow={t.portfolio.eyebrow}
+              title={t.portfolio.title}
+              description={t.portfolio.description}
+              link={{ href: localePath(lang, "/proyectos"), label: t.portfolio.link }}
             />
             <div className="grid gap-6 md:grid-cols-2">
               {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} wide={projects.length === 1} />
+                <ProjectCard key={project.slug} project={project} lang={lang} wide={projects.length === 1} />
               ))}
             </div>
           </section>
@@ -147,9 +138,9 @@ export default function HomePage() {
         <section aria-labelledby="servicios" className="pt-20 sm:pt-24">
           <SectionHeading
             id="servicios"
-            eyebrow="Servicios"
-            title="En qué te puedo ayudar"
-            description="Me involucro en todo el ciclo del proyecto para que el resultado sea coherente de principio a fin."
+            eyebrow={t.services.eyebrow}
+            title={t.services.title}
+            description={t.services.description}
           />
           <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {site.services.map((service) => (
@@ -189,9 +180,9 @@ export default function HomePage() {
         <section aria-labelledby="arquitectura" className="pt-20 sm:pt-24">
           <SectionHeading
             id="arquitectura"
-            eyebrow="Arquitectura"
-            title="De punta a punta"
-            description="Me encargo de todas las capas de una aplicación, para que funcionen juntas desde el primer día."
+            eyebrow={t.architecture.eyebrow}
+            title={t.architecture.title}
+            description={t.architecture.description}
           />
           <ol className="relative grid gap-4 md:grid-cols-4">
             <div aria-hidden className="absolute top-9 right-[12%] left-[12%] hidden h-px border-t-2 border-dashed border-accent/30 md:block" />
@@ -223,9 +214,9 @@ export default function HomePage() {
         <section aria-labelledby="proceso" className="pt-20 sm:pt-24">
           <SectionHeading
             id="proceso"
-            eyebrow="Proceso"
-            title="Cómo trabajo"
-            description="Un proceso claro y transparente, con avances que puedes revisar en cada etapa."
+            eyebrow={t.process.eyebrow}
+            title={t.process.title}
+            description={t.process.description}
           />
           <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {site.process.map((step, index) => (
@@ -236,7 +227,7 @@ export default function HomePage() {
                   className="outline-accent block text-5xl before:content-[attr(data-text)]"
                 />
                 <h3 className="mt-4 text-lg font-semibold text-heading">
-                  <span className="sr-only">Paso {index + 1}: </span>
+                  <span className="sr-only">{t.process.step} {index + 1}: </span>
                   {step.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{step.description}</p>
@@ -250,25 +241,25 @@ export default function HomePage() {
           <section aria-labelledby="ultimos" className="pt-20 sm:pt-24">
             <SectionHeading
               id="ultimos"
-              eyebrow="Blog"
-              title="Últimos artículos"
-              description="Guías prácticas y aprendizajes sobre desarrollo y diseño web."
-              link={{ href: "/blog", label: "Ir al blog" }}
+              eyebrow={t.blog.eyebrow}
+              title={t.blog.title}
+              description={t.blog.description}
+              link={{ href: localePath(lang, "/blog"), label: t.blog.link }}
             />
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {posts.map((post) => (
-                <PostCard key={post.slug} post={post} />
+                <PostCard key={post.slug} post={post} lang={lang} />
               ))}
             </div>
           </section>
         )}
 
         <div className="mt-24">
-          <ContactCta />
+          <ContactCta lang={lang} />
         </div>
 
         <div className="mt-10">
-          <Newsletter />
+          <Newsletter lang={lang} />
         </div>
       </div>
     </>

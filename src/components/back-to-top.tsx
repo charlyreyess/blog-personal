@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function BackToTop() {
+export function BackToTop({ label }: { label: string }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export function BackToTop() {
     <button
       type="button"
       onClick={() => window.scrollTo({ top: 0 })}
-      aria-label="Volver arriba"
+      aria-label={label}
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
       className={`fixed right-4 bottom-4 z-40 grid size-11 place-items-center rounded-full bg-accent text-on-accent shadow-lg shadow-accent/30 transition-all sm:right-6 sm:bottom-6 ${

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-// Logo del proyecto sobre una ficha blanca (los logos se ven bien en ambos temas).
-export function ProjectLogo({ src, title, size = 56 }: { src: string; title: string; size?: number }) {
+// Logo del proyecto sobre una ficha blanca.
+export function ProjectLogo({ src, alt, size = 56 }: { src: string; alt: string; size?: number }) {
   return (
     <span
       className="grid shrink-0 place-items-center overflow-hidden rounded-xl bg-white p-1 shadow-card ring-4 ring-surface"
@@ -9,7 +9,7 @@ export function ProjectLogo({ src, title, size = 56 }: { src: string; title: str
     >
       <Image
         src={src}
-        alt={`Logo de ${title}`}
+        alt={alt}
         width={size}
         height={size}
         quality={90}

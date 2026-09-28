@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PostCard } from "@/components/post-card";
+import type { Locale } from "@/i18n/config";
 import type { PostMeta } from "@/lib/posts";
 
 const normalize = (text: string) =>
@@ -11,7 +12,7 @@ const normalize = (text: string) =>
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "");
 
-export function BlogExplorer({ posts, tags }: { posts: PostMeta[]; tags: string[] }) {
+export function BlogExplorer({ posts, tags, lang }: { posts: PostMeta[]; tags: string[]; lang: Locale }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -88,7 +89,7 @@ export function BlogExplorer({ posts, tags }: { posts: PostMeta[]; tags: string[
       {results.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((post) => (
-            <PostCard key={post.slug} post={post} />
+            <PostCard key={post.slug} post={post} lang={lang} />
           ))}
         </div>
       ) : (

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import type { Locale } from "@/i18n/config";
 import { isContentFile, isValidSlug, renderMarkdown } from "@/lib/markdown";
 
 const PROJECTS_DIR = path.join(process.cwd(), "content", "proyectos");
@@ -35,9 +36,20 @@ export type Project = ProjectMeta & { html: string };
 
 const optional = (value: unknown) => (typeof value === "string" && value.trim() ? value.trim() : undefined);
 
-function readProjectFile(slug: string) {
+// Traducción opcional: content/proyectos/<lang>/<slug>.md sobrescribe título, descripción, rol, cliente y texto.
+function readTranslation(slug: string, lang: Locale) {
+  if (lang === "es") return null;
+  const file = path.join(PROJECTS_DIR, lang, `${slug}.md`);
+  if (!fs.existsSync(file)) return null;
+  return matter(fs.readFileSync(file, "utf8"));
+}
+
+function readProjectFile(slug: string, lang: Locale = "es") {
   const raw = fs.readFileSync(path.join(PROJECTS_DIR, `${slug}.md`), "utf8");
-  const { data, content } = matter(raw);
+  const original = matter(raw);
+  const traduccion = readTranslation(slug, lang);
+  const data = { ...original.data, ...(traduccion?.data ?? {}) };
+  const content = traduccion ? traduccion.content : original.content;
   const meta: ProjectMeta = {
     slug,
     title: String(data.title),
@@ -58,12 +70,12 @@ function readProjectFile(slug: string) {
   return { meta, content, draft: data.draft === true };
 }
 
-export function getAllProjects(): ProjectMeta[] {
+export function getAllProjects(lang: Locale = "es"): ProjectMeta[] {
   if (!fs.existsSync(PROJECTS_DIR)) return [];
   return fs
     .readdirSync(PROJECTS_DIR)
     .filter(isContentFile)
-    .map((file) => readProjectFile(file.replace(/\.md$/, "")))
+    .map((file) => readProjectFile(file.replace(/\.md$/, ""), lang))
     .filter((project) => !project.draft)
     .map((project) => project.meta)
     // "order" fija la posición (sin order = 50, en medio); a igual posición, destacados y luego por fecha.
@@ -75,8 +87,8 @@ export function getAllProjects(): ProjectMeta[] {
     );
 }
 
-export async function getProject(slug: string): Promise<Project | null> {
+export async function getProject(slug: string, lang: Locale = "es"): Promise<Project | null> {
   if (!isValidSlug(slug) || !fs.existsSync(path.join(PROJECTS_DIR, `${slug}.md`))) return null;
-  const { meta, content } = readProjectFile(slug);
+  const { meta, content } = readProjectFile(slug, lang);
   return { ...meta, html: await renderMarkdown(content) };
 }

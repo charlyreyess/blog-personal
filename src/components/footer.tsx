@@ -1,20 +1,24 @@
 import Link from "next/link";
-import { site, socialLinks } from "@/lib/site";
+import { localePath, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getSite, socialLinks } from "@/lib/site";
 
-const pages = [
-  { href: "/", label: "Inicio" },
-  { href: "/blog", label: "Blog" },
-  { href: "/proyectos", label: "Proyectos" },
-  { href: "/sobre-mi", label: "Sobre mí" },
-  { href: "/contacto", label: "Contacto" },
-];
+export function Footer({ lang, showBlog = true }: { lang: Locale; showBlog?: boolean }) {
+  const t = getDictionary(lang);
+  const site = getSite(lang);
+  const pages = [
+    { href: "/", label: t.nav.home },
+    { href: "/blog", label: t.nav.blog },
+    { href: "/proyectos", label: t.nav.projects },
+    { href: "/sobre-mi", label: t.nav.about },
+    { href: "/contacto", label: t.nav.contact },
+  ].filter((page) => showBlog || page.href !== "/blog");
 
-export function Footer({ showBlog = true }: { showBlog?: boolean }) {
   return (
     <footer className="mt-24 border-t border-line bg-surface">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 text-sm sm:grid-cols-[1.5fr_1fr_1fr] sm:px-6">
         <div>
-          <Link href="/" className="inline-flex items-center gap-2.5">
+          <Link href={localePath(lang, "/")} className="inline-flex items-center gap-2.5">
             <span className="grid size-9 place-items-center rounded-lg bg-accent text-sm font-semibold text-on-accent">
               {site.initials}
             </span>
@@ -23,12 +27,12 @@ export function Footer({ showBlog = true }: { showBlog?: boolean }) {
           <p className="mt-4 max-w-xs leading-relaxed text-muted">{site.tagline}</p>
         </div>
 
-        <nav aria-label="Pie de página">
-          <p className="font-semibold text-heading">Navegación</p>
+        <nav aria-label={t.footer.label}>
+          <p className="font-semibold text-heading">{t.footer.navigation}</p>
           <ul className="mt-3 space-y-2">
-            {pages.filter((page) => showBlog || page.href !== "/blog").map((page) => (
+            {pages.map((page) => (
               <li key={page.href}>
-                <Link href={page.href} className="text-muted hover:text-accent">
+                <Link href={localePath(lang, page.href)} className="text-muted hover:text-accent">
                   {page.label}
                 </Link>
               </li>
@@ -37,11 +41,11 @@ export function Footer({ showBlog = true }: { showBlog?: boolean }) {
         </nav>
 
         <div>
-          <p className="font-semibold text-heading">Contacto</p>
+          <p className="font-semibold text-heading">{t.footer.contact}</p>
           <ul className="mt-3 space-y-2">
             <li>
-              <Link href="/contacto" className="text-muted hover:text-accent">
-                Formulario de contacto
+              <Link href={localePath(lang, "/contacto")} className="text-muted hover:text-accent">
+                {t.footer.contactForm}
               </Link>
             </li>
             {socialLinks.map((link) => (
@@ -51,11 +55,6 @@ export function Footer({ showBlog = true }: { showBlog?: boolean }) {
                 </a>
               </li>
             ))}
-            <li>
-              <a href="/rss.xml" className="text-muted hover:text-accent">
-                RSS
-              </a>
-            </li>
           </ul>
         </div>
       </div>

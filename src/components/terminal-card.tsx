@@ -1,11 +1,12 @@
-import { site } from "@/lib/site";
+import type { Locale } from "@/i18n/config";
+import { getSite } from "@/lib/site";
 
-// Ventana de terminal decorativa para la portada (siempre oscura, en ambos temas).
-const stack = {
+// Ventana de terminal decorativa para la portada.
+const stack = (lang: Locale) => ({
   frontend: ["Next.js", "React", "Flutter"],
   backend: ["Node.js", "Java", "Python"],
-  datos: ["PostgreSQL", "MySQL"],
-};
+  [lang === "es" ? "datos" : "data"]: ["PostgreSQL", "MySQL"],
+});
 
 function Prompt({ children }: { children: React.ReactNode }) {
   return (
@@ -19,8 +20,9 @@ function Prompt({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function TerminalCard() {
-  const entries = Object.entries(stack);
+export function TerminalCard({ lang }: { lang: Locale }) {
+  const site = getSite(lang);
+  const entries = Object.entries(stack(lang));
   return (
     <figure
       aria-label={`Terminal: ${site.name}, ${site.roleShort}`}

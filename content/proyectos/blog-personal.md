@@ -12,15 +12,17 @@ featured: false
 
 ## El reto
 
-Quería un espacio propio para publicar lo que aprendo y mostrar mis proyectos, sin pagar hosting y sin depender de una plataforma de terceros.
+Quería un portafolio propio, rápido y profesional para mostrar mis proyectos a clientes de habla hispana e inglesa, sin pagar hosting ni depender de plataformas de terceros.
 
 ## La solución
 
 - **Next.js** con páginas estáticas: carga muy rápida y buen SEO.
-- **Artículos y proyectos en Markdown**, versionados en GitHub.
-- **Newsletter** con Supabase, protegida con Row Level Security.
-- **Despliegue automático** en Vercel con cada `git push`.
+- **Bilingüe (español / inglés)** con rutas por idioma y enlaces `hreflang` para buscadores.
+- **Proyectos en Markdown**, versionados en GitHub.
+- **Formulario de contacto y newsletter** con Resend, protegidos contra spam, y correos con el diseño del sitio.
+- **Página privada para responder** mensajes con enlaces firmados que caducan.
+- **Despliegue continuo** en Vercel con cada `git push`.
 
 ## Resultado
 
-Un sitio accesible, con modo oscuro y adaptado a móvil, que publico gratis.
+Un sitio accesible y adaptado a móvil, con 97 en rendimiento y 100 en accesibilidad en Lighthouse, que se publica gratis.

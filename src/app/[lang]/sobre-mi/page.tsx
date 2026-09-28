@@ -2,30 +2,36 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { getBio } from "@/lib/bio";
-import { site, socialLinks } from "@/lib/site";
+import { localePath, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { alternates } from "@/i18n/metadata";
+import { getSite, socialLinks } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Sobre mí",
-  description: `Quién es ${site.name} y en qué trabaja.`,
-  alternates: { canonical: "/sobre-mi" },
-};
+export async function generateMetadata({ params }: PageProps<"/[lang]/sobre-mi">): Promise<Metadata> {
+  const lang = (await params).lang as Locale;
+  const t = getDictionary(lang).about;
+  return { title: t.title, description: t.metaDescription, alternates: alternates(lang, "/sobre-mi") };
+}
 
-export default async function AboutPage() {
-  const bio = await getBio();
+export default async function AboutPage({ params }: PageProps<"/[lang]/sobre-mi">) {
+  const lang = (await params).lang as Locale;
+  const site = getSite(lang);
+  const t = getDictionary(lang).about;
+  const bio = await getBio(lang);
 
   return (
     <>
-      <PageHero eyebrow={`${site.role} · ${site.location}`} title="Sobre mí" />
+      <PageHero eyebrow={`${site.role} · ${site.location}`} title={t.title} />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="relative -mt-12 grid gap-6 md:grid-cols-[1fr_18rem]">
           <div className="rounded-lg bg-surface p-6 shadow-card sm:p-10">
-            <h2 className="text-xl font-semibold text-heading">Biografía</h2>
+            <h2 className="text-xl font-semibold text-heading">{t.bio}</h2>
             <div className="prose mt-4" dangerouslySetInnerHTML={{ __html: bio.html }} />
 
             {bio.timeline.length > 0 && (
               <>
-                <h2 className="mt-12 text-xl font-semibold text-heading">Trayectoria</h2>
+                <h2 className="mt-12 text-xl font-semibold text-heading">{t.timeline}</h2>
                 <ol className="mt-6 border-l-2 border-accent-soft">
                   {bio.timeline.map((item) => (
                     <li key={`${item.period}-${item.title}`} className="relative pb-8 pl-6 last:pb-0">
@@ -45,7 +51,7 @@ export default async function AboutPage() {
               </>
             )}
 
-            <h2 className="mt-12 text-xl font-semibold text-heading">Con qué trabajo</h2>
+            <h2 className="mt-12 text-xl font-semibold text-heading">{t.skills}</h2>
             <ul className="mt-4 flex flex-wrap gap-2">
               {site.skills.map((skill) => (
                 <li key={skill} className="rounded-md bg-accent-soft px-4 py-2 text-sm font-medium text-accent">
@@ -68,8 +74,8 @@ export default async function AboutPage() {
             </p>
             <ul className="mt-5 space-y-2 border-t border-line pt-5 text-sm">
               <li>
-                <Link href="/contacto" className="text-accent hover:underline">
-                  Escríbeme por el formulario →
+                <Link href={localePath(lang, "/contacto")} className="text-accent hover:underline">
+                  {t.write}
                 </Link>
               </li>
               {socialLinks.map((link) => (

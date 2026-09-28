@@ -6,8 +6,10 @@ export function ProjectCover({
   project,
   priority = false,
   sizes = "(min-width: 1024px) 560px, 100vw",
+  alt,
 }: {
   project: ProjectMeta;
+  alt?: string;
   priority?: boolean;
   sizes?: string;
 }) {
@@ -17,7 +19,7 @@ export function ProjectCover({
       <div className="absolute inset-0" style={contain ? { background: project.imageBg ?? "#ffffff" } : undefined}>
         <Image
           src={project.image}
-          alt={`Captura del proyecto ${project.title}`}
+          alt={alt ?? project.title}
           fill
           priority={priority}
           sizes={sizes}

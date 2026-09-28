@@ -3,20 +3,49 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { site } from "@/lib/site";
+import { localePath, stripLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getSite } from "@/lib/site";
 
-const nav = [
-  { href: "/proyectos", label: "Proyectos" },
-  { href: "/blog", label: "Blog" },
-  { href: "/sobre-mi", label: "Sobre mí" },
-];
+// Selector ES / EN: enlaza a la misma página en el otro idioma.
+function LanguageSwitch({ lang, path, label, title }: { lang: Locale; path: string; label: string; title: string }) {
+  return (
+    <div role="group" aria-label={label} className="flex items-center rounded-md border border-line p-0.5 font-mono text-xs font-semibold">
+      {(["es", "en"] as const).map((l) =>
+        l === lang ? (
+          <span key={l} aria-current="true" className="rounded bg-accent px-2 py-1 text-on-accent uppercase">
+            {l}
+          </span>
+        ) : (
+          <Link
+            key={l}
+            href={localePath(l, path)}
+            hrefLang={l}
+            lang={l}
+            title={title}
+            className="rounded px-2 py-1 text-muted uppercase transition-colors hover:bg-accent-soft hover:text-accent"
+          >
+            {l}
+          </Link>
+        ),
+      )}
+    </div>
+  );
+}
 
-export function Header({ showBlog = true }: { showBlog?: boolean }) {
+export function Header({ lang, showBlog = true }: { lang: Locale; showBlog?: boolean }) {
+  const t = getDictionary(lang).nav;
+  const site = getSite(lang);
   const pathname = usePathname();
+  const path = stripLocale(pathname); // ruta sin prefijo de idioma, p. ej. "/proyectos"
   const [open, setOpen] = useState(false);
-  const links = showBlog ? nav : nav.filter((item) => item.href !== "/blog");
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
+  const nav = [
+    { href: "/proyectos", label: t.projects },
+    { href: "/blog", label: t.blog },
+    { href: "/sobre-mi", label: t.about },
+  ].filter((item) => showBlog || item.href !== "/blog");
+  const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 
   // Cierra el menú móvil con Escape
   useEffect(() => {
@@ -29,7 +58,7 @@ export function Header({ showBlog = true }: { showBlog?: boolean }) {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/90 shadow-card backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="group flex items-center gap-2.5" onClick={() => setOpen(false)}>
+        <Link href={localePath(lang, "/")} className="group flex items-center gap-2.5" onClick={() => setOpen(false)}>
           <span
             aria-hidden
             className="grid size-9 place-items-center rounded-lg bg-accent text-sm font-semibold text-on-accent transition-transform group-hover:-rotate-6"
@@ -42,13 +71,13 @@ export function Header({ showBlog = true }: { showBlog?: boolean }) {
           </span>
         </Link>
 
-        <div className="flex items-center gap-1 md:gap-2">
-          <nav aria-label="Principal" className="hidden md:block">
+        <div className="flex items-center gap-2">
+          <nav aria-label={t.main} className="hidden md:block">
             <ul className="flex items-center gap-1 text-sm font-medium">
-              {links.map((item) => (
+              {nav.map((item) => (
                 <li key={item.href}>
                   <Link
-                    href={item.href}
+                    href={localePath(lang, item.href)}
                     aria-current={isActive(item.href) ? "page" : undefined}
                     className={`rounded-md px-3 py-2 transition-colors hover:bg-accent-soft hover:text-accent ${
                       isActive(item.href) ? "text-accent" : "text-muted"
@@ -60,19 +89,19 @@ export function Header({ showBlog = true }: { showBlog?: boolean }) {
               ))}
             </ul>
           </nav>
-          <ThemeToggle />
+          <LanguageSwitch lang={lang} path={path} label={t.language} title={t.switchTo} />
           <Link
-            href="/contacto"
+            href={localePath(lang, "/contacto")}
             className="hidden rounded-md bg-accent px-4 py-2 text-sm font-medium text-on-accent transition-opacity hover:opacity-90 md:inline-block"
           >
-            Contactar
+            {t.contactCta}
           </Link>
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-controls="menu-movil"
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-label={open ? t.closeMenu : t.openMenu}
             className="grid size-9 place-items-center rounded-md text-heading hover:bg-accent-soft md:hidden"
           >
             <svg aria-hidden viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -83,12 +112,12 @@ export function Header({ showBlog = true }: { showBlog?: boolean }) {
       </div>
 
       {open && (
-        <nav id="menu-movil" aria-label="Menú móvil" className="border-t border-line bg-surface md:hidden">
+        <nav id="menu-movil" aria-label={t.mobile} className="border-t border-line bg-surface md:hidden">
           <ul className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 text-base font-medium">
-            {[...links, { href: "/contacto", label: "Contacto" }].map((item) => (
+            {[...nav, { href: "/contacto", label: t.contact }].map((item) => (
               <li key={item.href}>
                 <Link
-                  href={item.href}
+                  href={localePath(lang, item.href)}
                   onClick={() => setOpen(false)}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={`block rounded-md px-3 py-3 hover:bg-accent-soft ${

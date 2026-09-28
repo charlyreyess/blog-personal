@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { projectTypes } from "@/lib/contact";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { projectTypeLabels, projectTypes } from "@/lib/contact";
 
 type Status = { kind: "idle" | "loading" | "ok" | "error"; message?: string };
 
 const field =
   "mt-1.5 w-full rounded-md border border-line bg-paper px-4 py-3 text-ink placeholder:text-muted focus:border-accent focus:outline-none";
 
-export function ContactForm() {
+export function ContactForm({ lang }: { lang: Locale }) {
+  const t = getDictionary(lang).contact;
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -20,13 +23,13 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, lang }),
       });
       const result = (await res.json()) as { message: string };
       setStatus({ kind: res.ok ? "ok" : "error", message: result.message });
       if (res.ok) form.reset();
     } catch {
-      setStatus({ kind: "error", message: "No se pudo conectar. Inténtalo de nuevo." });
+      setStatus({ kind: "error", message: t.offline });
     }
   }
 
@@ -36,14 +39,14 @@ export function ContactForm() {
         <span aria-hidden className="mx-auto grid size-14 place-items-center rounded-full bg-accent-soft text-2xl text-accent">
           ✓
         </span>
-        <p className="mt-5 text-xl font-semibold text-heading">¡Mensaje enviado!</p>
+        <p className="mt-5 text-xl font-semibold text-heading">{t.sent}</p>
         <p className="mt-2 text-muted">{status.message}</p>
         <button
           type="button"
           onClick={() => setStatus({ kind: "idle" })}
           className="mt-6 text-sm font-semibold text-accent hover:underline"
         >
-          Enviar otro mensaje
+          {t.sendAnother}
         </button>
       </div>
     );
@@ -57,13 +60,13 @@ export function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="text-sm font-semibold text-heading">
-            Nombre
+            {t.name}
           </label>
-          <input id="name" name="name" required maxLength={100} autoComplete="name" className={field} placeholder="Tu nombre" />
+          <input id="name" name="name" required maxLength={100} autoComplete="name" className={field} placeholder={t.namePlaceholder} />
         </div>
         <div>
           <label htmlFor="email" className="text-sm font-semibold text-heading">
-            Email
+            {t.email}
           </label>
           <input
             id="email"
@@ -73,25 +76,27 @@ export function ContactForm() {
             maxLength={254}
             autoComplete="email"
             className={field}
-            placeholder="tu@email.com"
+            placeholder={lang === "es" ? "tu@email.com" : "you@email.com"}
           />
         </div>
       </div>
 
       <div className="mt-5">
         <label htmlFor="type" className="text-sm font-semibold text-heading">
-          Tipo de proyecto
+          {t.type}
         </label>
         <select id="type" name="type" className={field} defaultValue={projectTypes[0]}>
           {projectTypes.map((type) => (
-            <option key={type}>{type}</option>
+            <option key={type} value={type}>
+              {projectTypeLabels[lang][type]}
+            </option>
           ))}
         </select>
       </div>
 
       <div className="mt-5">
         <label htmlFor="message" className="text-sm font-semibold text-heading">
-          Mensaje
+          {t.message}
         </label>
         <textarea
           id="message"
@@ -101,18 +106,18 @@ export function ContactForm() {
           maxLength={3000}
           rows={6}
           className={`${field} resize-y`}
-          placeholder="Cuéntame sobre tu proyecto: objetivos, plazos y cualquier detalle útil."
+          placeholder={t.messagePlaceholder}
         />
       </div>
 
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-muted">Respondo en un plazo de 1 a 2 días hábiles.</p>
+        <p className="text-xs text-muted">{t.responseTime}</p>
         <button
           type="submit"
           disabled={status.kind === "loading"}
           className="rounded-md bg-accent px-7 py-3.5 font-semibold text-on-accent shadow-lg shadow-accent/25 transition-opacity hover:opacity-90 disabled:opacity-60"
         >
-          {status.kind === "loading" ? "Enviando…" : "Enviar mensaje"}
+          {status.kind === "loading" ? t.sending : t.submit}
         </button>
       </div>
 
