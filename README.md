@@ -61,3 +61,10 @@ Los correos (mensaje de contacto, aviso de nuevo suscriptor y newsletter) usan e
   ```bash
   NEXT_PUBLIC_SITE_URL=https://blog-personal-snowy.vercel.app npx tsx scripts/generar-correos.mts
   ```
+
+## Idiomas (español / inglés)
+
+- El español vive en la raíz (`/proyectos`) y el inglés con prefijo (`/en/proyectos`). El botón **ES / EN** de la cabecera lleva a la misma página en el otro idioma.
+- **Textos de la interfaz:** `src/i18n/dictionaries.ts`. **Perfil** (titular, servicios, arquitectura, proceso): `src/lib/site.ts`.
+- **Biografía en inglés:** `content/biografia.en.md`.
+- **Proyecto en inglés:** crea `content/proyectos/en/<mismo-nombre>.md` con `title`, `description` y `role` en el encabezado y el texto traducido. Si no existe, se muestra la versión en español.
