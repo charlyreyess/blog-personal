@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CircuitTraces, CodeFloat, Glyph, SectionDivider } from "@/components/background-decor";
 import { ContactCta } from "@/components/contact-cta";
 import { Newsletter } from "@/components/newsletter";
 import { PostCard } from "@/components/post-card";
@@ -103,6 +104,18 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </div>
       </section>
 
+      <div className="relative overflow-x-clip">
+        {/* Fragmentos de código en los márgenes (solo pantallas anchas) */}
+        <CodeFloat side="left" top="6%" code="git push origin main" rotate={-3} />
+        <CodeFloat side="right" top="12%" code="const app = build(idea);" rotate={2} />
+        <CodeFloat side="left" top="24%" code="SELECT * FROM proyectos;" rotate={2} />
+        <CodeFloat side="right" top="33%" code="docker compose up -d" rotate={-2} />
+        <CodeFloat side="left" top="45%" code="<App lang={lang} />" rotate={-2} />
+        <CodeFloat side="right" top="55%" code="POST /api/contact → 200" rotate={3} />
+        <CodeFloat side="left" top="66%" code="model.track(frame, persist=True)" rotate={2} />
+        <CodeFloat side="right" top="76%" code="✓ build completed" rotate={-3} />
+        <CodeFloat side="left" top="88%" code="flutter run -d chrome" rotate={-1} />
+
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Cifras */}
         <section aria-label={t.statsLabel} className="pt-14">
@@ -118,7 +131,8 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
 
         {/* Proyectos */}
         {projects.length > 0 && (
-          <section aria-labelledby="proyectos" className="pt-20 sm:pt-24">
+          <section aria-labelledby="proyectos" className="relative isolate pt-20 sm:pt-24">
+            <Glyph text="{ }" className="top-8 -right-4 text-[11rem]" />
             <SectionHeading
               id="proyectos"
               eyebrow={t.portfolio.eyebrow}
@@ -135,7 +149,10 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         )}
 
         {/* Servicios */}
-        <section aria-labelledby="servicios" className="pt-20 sm:pt-24">
+        <SectionDivider label="services.map(render)" />
+        <section aria-labelledby="servicios" className="relative isolate pt-12 sm:pt-14">
+          <Glyph text="</>" className="-top-2 -left-6 text-[10rem]" />
+          <CircuitTraces side="right" className="top-24" />
           <SectionHeading
             id="servicios"
             eyebrow={t.services.eyebrow}
@@ -177,7 +194,10 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </section>
 
         {/* Arquitectura */}
-        <section aria-labelledby="arquitectura" className="pt-20 sm:pt-24">
+        <SectionDivider label="frontend → api → db → cloud" />
+        <section aria-labelledby="arquitectura" className="relative isolate pt-12 sm:pt-14">
+          <Glyph text="λ" className="-top-6 right-4 text-[12rem]" />
+          <CircuitTraces side="left" className="top-28" />
           <SectionHeading
             id="arquitectura"
             eyebrow={t.architecture.eyebrow}
@@ -211,7 +231,9 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </section>
 
         {/* Proceso */}
-        <section aria-labelledby="proceso" className="pt-20 sm:pt-24">
+        <SectionDivider label="while (!done) { iterate(); }" />
+        <section aria-labelledby="proceso" className="relative isolate pt-12 sm:pt-14">
+          <Glyph text="#" className="-top-6 -right-2 text-[12rem]" />
           <SectionHeading
             id="proceso"
             eyebrow={t.process.eyebrow}
@@ -261,6 +283,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         <div className="mt-10">
           <Newsletter lang={lang} />
         </div>
+      </div>
       </div>
     </>
   );
