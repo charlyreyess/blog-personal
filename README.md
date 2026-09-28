@@ -1,6 +1,6 @@
 # Blog personal — Next.js + Vercel + Supabase
 
-**Web:** https://blog-personal-snowy.vercel.app · Cada `git push` a `main` se publica automáticamente en Vercel.
+**Web:** https://carlos-reyes-dev.vercel.app · Cada `git push` a `main` se publica automáticamente en Vercel.
 
 Blog personal hecho con **Next.js 16 (App Router)**, **TypeScript** y **Tailwind CSS v4**. Los artículos son archivos Markdown y la newsletter guarda los emails en **Supabase**. Se despliega gratis en **Vercel** siguiendo la guía de [notfound404.es](https://www.notfound404.es/es/blog/desplegar-web-gratis).
 
@@ -59,7 +59,7 @@ Los correos (mensaje de contacto, aviso de nuevo suscriptor y newsletter) usan e
 - **Newsletter:** copia el HTML de `emails/newsletter.html` en Resend → *Broadcasts* → *Create* (editor HTML) y cambia el título, el texto, el enlace y la imagen del artículo. Resend sustituye `{{{RESEND_UNSUBSCRIBE_URL}}}` por el enlace de baja.
 - **Regenerar la plantilla** tras cambiar el diseño:
   ```bash
-  NEXT_PUBLIC_SITE_URL=https://blog-personal-snowy.vercel.app npx tsx scripts/generar-correos.mts
+  NEXT_PUBLIC_SITE_URL=https://carlos-reyes-dev.vercel.app npx tsx scripts/generar-correos.mts
   ```
 
 ## Idiomas (español / inglés)
